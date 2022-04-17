@@ -5,9 +5,10 @@ import Event from '../../components/event/event';
 import { AppRoute } from '../../const.js';
 
 const Form = () => {
+
   return (
     <>
-      <Header mode={AppRoute.MAIN}/>
+      <Header />
       <section className="main__wrapper">
         <Filter />
         <Event />

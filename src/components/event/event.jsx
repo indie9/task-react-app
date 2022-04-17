@@ -1,9 +1,14 @@
 import React from "react";
 
+import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+
 const Event = () =>{
+
+    const { id }= useParams();
+
     return (
         <form className="board__form">
-            <h2 className="board__title">Редактирование события</h2>
+            <h2 className="board__title">{id ? 'Редактирование события' : 'Добавление события' }</h2>
             <fieldset className="board__field board__field--theme">
               <label for="theme" className="board__label board__label--theme">Тема:</label>
               <textarea
@@ -31,7 +36,7 @@ const Event = () =>{
               />
             </fieldset>
             <div className="btns">
-              <button type="submit" className="btn-submit">Сохранить</button>
+              <button type="submit" className="btn-submit">{id ? 'Сохранить' : 'Добавить' }</button>
               <button type="reset" className="btn-reset">Очистить</button>
             </div>
           </form>
