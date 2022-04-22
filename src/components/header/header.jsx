@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 const Header = () => {
   const location = useLocation();
-  console.log(location.pathname)
+
     return (
       <section className="main__header">
         <section className="main__header-wrap">

@@ -4,14 +4,14 @@ import Filter from '../../components/filter/filter';
 import Event from '../../components/event/event';
 import { AppRoute } from '../../const.js';
 
-const Form = () => {
+const Form = ({events}) => {
 
   return (
     <>
       <Header />
       <section className="main__wrapper">
         <Filter />
-        <Event />
+        <Event events={events} />
       </section>
     </>
 

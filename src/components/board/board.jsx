@@ -7,15 +7,15 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { useLocation } from 'react-router-dom';
 
 
-const Board = () => {
+const Board = ({events}) => {
 
   const location = useLocation();
 
   return (
   <section className="board">
-    {location.pathname === AppRoute.ARCHIVE ? <></> : <Sorting />}
+    {location.pathname !== AppRoute.ARCHIVE && <Sorting />}
     <div className="board__events">
-      <Card />
+      {events.map(event => <Card {...event} key={event._id} />)}
       <LoadMore />
 
     </div>

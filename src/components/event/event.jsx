@@ -1,13 +1,35 @@
 import React from "react";
 
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import moment from "moment";
+import "moment/locale/ru";
 
-const Event = () =>{
+const Event = ({events}) =>{
 
-    const { id }= useParams();
+      const { id }= useParams();
+
+      const cardData = ( id ? events.filter(item => item._id === id)[0] : {theme:'',comment:'',date: new Date()});
+
+      const formateDate = moment(cardData.date).format("YYYY-MM-DDTkk:mm");
+
+      const [form, setForm] = React.useState({
+        theme: `${cardData.theme}`,
+        comment: `${cardData.comment}`,
+        date: `${formateDate}`,
+      })
+
+      const handleFieldChange = (evt) => {
+        const { name, value } = evt.target;
+        setForm({ ...form, [name]: value})
+      }
+
+      const handleSubmit = (evt) => {
+        evt.preventDefault();
+        console.log('submit form', form);
+      }
 
     return (
-        <form className="board__form">
+        <form className="board__form" onSubmit={handleSubmit}>
             <h2 className="board__title">{id ? 'Редактирование события' : 'Добавление события' }</h2>
             <fieldset className="board__field board__field--theme">
               <label for="theme" className="board__label board__label--theme">Тема:</label>
@@ -15,8 +37,10 @@ const Event = () =>{
                 type="text"
                 className="board__input board__input--theme"
                 name="theme"
+                onChange={handleFieldChange}
+                value={form.theme}
                 required
-              ></textarea>
+              > </textarea>
             </fieldset>
             <fieldset className="board__field board__field--comment">
               <label for="comment" className="board__label board__label--comment">Комментарий:</label>
@@ -24,6 +48,8 @@ const Event = () =>{
                 type="text"
                 className="board__input board__input--comment"
                 name="comment"
+                onChange={handleFieldChange}
+                value={form.comment}
                 required
               ></textarea>
             </fieldset>
@@ -33,6 +59,8 @@ const Event = () =>{
                 type="datetime-local"
                 className="board__input board__input--date"
                 name="date"
+                value={form.date}
+                onChange={handleFieldChange}
               />
             </fieldset>
             <div className="btns">
