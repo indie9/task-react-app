@@ -5,20 +5,25 @@ import Event from '../../pages/form/form';
 import Unfoud from '../../pages/unfound/unfoud';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { observer } from 'mobx-react-lite';
+import { events } from '../../store';
+
+const App = observer(() => {
 
 
-const App = ({events}) => {
+  const { data } = events;
+  console.log(data)
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Main events={events}/>
+          <Main events={data}/>
         </Route>
         <Route path={AppRoute.ARCHIVE} exact  >
-          <Archive events={events} />
+          <Archive  />
         </Route>
         <Route path={AppRoute.EVENT} exact  >
-          <Event events={events}/>
+          <Event events={data}/>
         </Route>
         <Route>
           <Unfoud />
@@ -26,6 +31,6 @@ const App = ({events}) => {
       </Switch >
     </BrowserRouter>
   )
-}
+});
 
 export default App;
