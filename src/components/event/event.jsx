@@ -4,6 +4,7 @@ import moment from "moment";
 import "moment/locale/ru";
 import { events } from "../../store";
 import { AppRoute } from "../../const"
+import { useHistory } from "react-router-dom";
 
 const Event = () =>{
 
@@ -38,8 +39,7 @@ const Event = () =>{
           date: form.date,
           favorite: form.favorite,
           archive: form.archive,
-        });
-        document.location.href =  AppRoute.MAIN;
+        }).then(() => document.location.href = AppRoute.MAIN);
       }
       const addEvent = (evt) => {
         console.log("add");
@@ -51,8 +51,7 @@ const Event = () =>{
           date: form.date,
           favorite: form.favorite,
           archive: form.archive,
-        })
-        document.location.href = AppRoute.MAIN;
+        }).then(() => document.location.href = AppRoute.MAIN);
       }
 
     return (

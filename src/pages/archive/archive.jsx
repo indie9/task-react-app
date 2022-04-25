@@ -8,11 +8,13 @@ import { events } from '../../store';
 
 const Archive = observer(() => {
   const { archiveData } = events;
+ 
   return (
     <>
       <Header mode={AppRoute.ARCHIVE}/>
       <section className="main__wrapper">
         <Board mode={AppRoute.ARCHIVE} events={archiveData}/>
+        
       </section>
     </>
   )

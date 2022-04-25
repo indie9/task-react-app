@@ -12,7 +12,8 @@ const request = async (url, method = 'GET', body) => {
       'Content-type': 'application/json'
     })
   });
-
+  console.log('мой запрос ',response);
+  
   return await response.json();
 }
 
@@ -38,4 +39,9 @@ export const deleteEvent = (id) => {
 
 export const editEvent = (data) => {
   return request(`${url}`, 'PUT', data);
+}
+
+export const deleteArchive = () => {
+  return request(`${url}/archive/delete`, 'DELETE');
+ 
 }
