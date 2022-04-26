@@ -16,7 +16,7 @@ const Sorting = observer( () =>{
         className="board__filter visually-hidden"
         name="board-filter"
         onChange={sorting}
-        value={"notArchiveDate"}
+        value={"defaultSortedData"}
       />
       <label for="board__filter-default" className="board__filter-label">По умолчанию</label>
       <input

@@ -5,7 +5,7 @@ import moment from "moment";
 
 
 class EventsStore {
-  data = [ ];
+  data = [];
   filtredData = [];
 
   constructor () {
@@ -42,20 +42,25 @@ class EventsStore {
   }
 
   get startSortData() {
-    return this.data
+    return this.filtredData
       .filter(x => !x.archive)
       .sort((a,b) => Date.parse(b.date) - Date.parse(a.date));
   }
   get endSortData() {
-    return this.data
+    return this.filtredData
     .filter(x => !x.archive)
     .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
   }
-
+  get defaultSortedData() {
+    return this.filtredData
+    .filter(x => !x.archive)
+    .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
+  }
   *fetch() {
     const response = yield getEvents();
     this.data = response;
     this.filtredData = response.filter(x => !x.archive);
+
   }
 
   *getOneEvent(_id){
