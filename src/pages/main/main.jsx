@@ -7,13 +7,14 @@ import { events } from '../../store';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
-  const { notArchiveDate } = events;
+ 
+  const { filtredData } = events;
   return (
     <>
       <Header mode={AppRoute.MAIN}/>
       <section className="main__wrapper">
         <Filter />
-        <Board events={notArchiveDate}/>
+        <Board events={filtredData}/>
 
       </section>
     </>

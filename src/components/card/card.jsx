@@ -7,31 +7,25 @@ import "./card.css";
 import { events } from "../../store/index";
 
 
-const Card = ({_id,theme,comment,date,favorite,archive}) => {
-
+const Card = ({event}) => {
+  const {_id,theme,comment,date,favorite,archive} = event;
   const formateDate = moment(date).format('DD MMMM')
-
 
   const handleToArchive = (evt) => {
     evt.preventDefault();
     events.editEvent({
+      ...event,
       id: _id,
-      theme,
-      comment,
-      date,
-      favorite,
       archive: !archive,
     })
   }
   const handleToFavorite = (evt) => {
     evt.preventDefault();
     events.editEvent({
+      ...event,
       id: _id,
-      theme,
-      comment,
-      date,
       favorite: !favorite,
-      archive,
+ 
     });
 
   }

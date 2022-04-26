@@ -11,7 +11,7 @@ const Event = () =>{
       const { id }= useParams();
 
       const cardData = ( id ? events.data.filter(item => item._id === id)[0] : {theme:'',comment:'',date: new Date()});
-      console.log('cardData',events)
+     
       const formateDate = moment(cardData.date).format("YYYY-MM-DDTkk:mm");
 
       const [form, setForm] = React.useState({
