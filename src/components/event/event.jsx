@@ -11,15 +11,17 @@ const Event = () =>{
       const { id }= useParams();
 
       const cardData = ( id ? events.data.filter(item => item._id === id)[0] : {theme:'',comment:'',date: new Date()});
-     
+
       const formateDate = moment(cardData.date).format("YYYY-MM-DDTkk:mm");
 
       const [form, setForm] = React.useState({
         theme: `${cardData.theme}`,
         comment: `${cardData.comment}`,
         date: `${formateDate}`,
+        favorite: cardData.favorite,
+        archive: cardData.archive,
       })
-
+      console.log(form);
       const handleFieldChange = (evt) => {
         const { name, value } = evt.target;
         setForm({ ...form, [name]: value})
@@ -31,6 +33,7 @@ const Event = () =>{
 
       const handleToEdit = (evt) => {
         console.log("edit");
+
         evt.preventDefault();
         events.editEvent({
           id: cardData._id,
@@ -49,8 +52,6 @@ const Event = () =>{
           theme: form.theme,
           comment: form.comment,
           date: form.date,
-          favorite: form.favorite,
-          archive: form.archive,
         }).then(() => document.location.href = AppRoute.MAIN);
       }
 

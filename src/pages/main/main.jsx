@@ -7,8 +7,10 @@ import { events } from '../../store';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
- 
+
   const { filtredData } = events;
+
+
   return (
     <>
       <Header mode={AppRoute.MAIN}/>

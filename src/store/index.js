@@ -7,6 +7,7 @@ import moment from "moment";
 class EventsStore {
   data = [ ];
   filtredData = [];
+
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
@@ -39,7 +40,17 @@ class EventsStore {
     return this.data
     .filter(x => x.favorite && !x.archive);
   }
-  
+
+  get startSortData() {
+    return this.data
+      .filter(x => !x.archive)
+      .sort((a,b) => Date.parse(b.date) - Date.parse(a.date));
+  }
+  get endSortData() {
+    return this.data
+    .filter(x => !x.archive)
+    .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
+  }
 
   *fetch() {
     const response = yield getEvents();
@@ -72,4 +83,3 @@ class EventsStore {
 }
 
 export const events = new EventsStore( );
-
