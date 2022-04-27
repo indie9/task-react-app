@@ -6,7 +6,11 @@ import { action } from "mobx"
 
 const Sorting = observer( () =>{
 
-  const sorting = action((evt) => { events.filtredData = events[evt.target.value]});
+  const sorting = action((evt) => { 
+    events.filtredData = events[evt.target.value];
+   
+  });
+
     return(
       <div className="board__filter-list">
       <span className="board__filter--title">Сортировка:</span>

@@ -32,6 +32,7 @@ const Card = ({event}) => {
   const handleDelete = (evt) => {
     evt.preventDefault();
     events.deleteEvent(_id);
+    
   }
 
 

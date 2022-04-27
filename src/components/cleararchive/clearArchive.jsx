@@ -5,6 +5,7 @@ const ClearArchive = () => {
     const handleDeleteArchive = (evt) => {
         evt.preventDefault();
         events.deleteArchive();
+        events.fetch();
         //events.archiveData.map(item => events.deleteEvent(item._id));
       }
     return (

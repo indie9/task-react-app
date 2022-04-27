@@ -52,9 +52,8 @@ class EventsStore {
     .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
   }
   get defaultSortedData() {
-    return this.filtredData
+    return this.data
     .filter(x => !x.archive)
-    .sort((a,b) => Date.parse(a.date) - Date.parse(b.date));
   }
   *fetch() {
     const response = yield getEvents();
