@@ -1,20 +1,21 @@
 export const events = [
   {
     _id: '622b3c4b27c135009e310b27',
-    theme: 'It has survived not only five centuries',
-    comment: 'It was popularised in the 1960s with the release of Letraset sheets',
+    name: 'It has survived not only five centuries',
+    autor: 'onegin',
     date: '2022-03-18T20:36:38.407Z',
-    archive: false,
-    favorite: false,
+    type: "error",
+    status: "ready",
+    priority: "low",
   },
   {
-    _id: '6234eb3e05ce23e1d26f9159',
-    theme: 'Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit',
-    comment: 'Vestibulum ante ipsum primis in faucibus orci luctus et',
-    date: '2022-03-16T20:37:00.000Z',
-
-    favorite: true,
-    archive: true,
+    _id: '622b3c4b27c135009e310b27',
+    name: 'It has survived not only five centuries',
+    autor: 'Pushkin',
+    date: '2022-03-18T20:36:38.407Z',
+    type: "done",
+    status: "inwork",
+    priority: "hight",
   },
   {
     _id: '47324hjkg432khg432k23',

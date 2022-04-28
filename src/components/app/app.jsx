@@ -7,15 +7,16 @@ import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { observer } from 'mobx-react-lite';
 import { events } from '../../store';
-
+import Header from '../header/header';
 const App = observer(() => {
-
   const { data } = events;
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact>
-          <Main events={data}/>
+
+          <Main />
+
         </Route>
         <Route path={AppRoute.ARCHIVE} exact  >
           <Archive  />
