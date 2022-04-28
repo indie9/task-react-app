@@ -6,42 +6,40 @@ import { action } from "mobx"
 
 const Sorting = observer( () =>{
 
-  const sorting = action((evt) => { 
+  const sorting = action((evt) => {
     events.filtredData = events[evt.target.value];
-   
+
   });
 
     return(
-      <div className="board__filter-list">
-      <span className="board__filter--title">Сортировка:</span>
-      <input
-        type="radio"
-        id="board__filter-default"
-        className="board__filter visually-hidden"
-        name="board-filter"
-        onChange={sorting}
-        value={"defaultSortedData"}
-      />
-      <label for="board__filter-default" className="board__filter-label">По умолчанию</label>
-      <input
-        type="radio"
-        id="board__filter-new"
-        className="board__filter visually-hidden"
-        name="board-filter"
-        onChange={sorting}
-        value={"endSortData"}
-      />
-      <label for="board__filter-new" className="board__filter-label">Сначала новые</label>
-      <input
-        type="radio"
-        id="board__filter-old"
-        className="board__filter visually-hidden"
-        name="board-filter"
-        onChange={sorting}
-        value={"startSortData"}
-      />
-      <label for="board__filter-old" className="board__filter-label">Сначала старые</label>
-  </div>
+          <div className="sorting_list">
+            <select className="sorting_item sort-type">
+                <option selected disabled>Тип</option>
+                <option >Задача</option>
+                <option>Ошибка</option>
+
+            </select>
+            <input
+              type="text"
+              placeholder="Задача"
+              className="sorting_item sort-name"
+            />
+            <select className="sorting_item sort-autor">
+                 <option>Onegin</option>
+                 <option>Pushkin</option>
+            </select>
+            <select className="sorting_item sort-status">
+                 <option>ready</option>
+                 <option>open</option>
+                 <option>complete</option>
+            </select>
+            <select className="sorting_item sort-priority">
+                 <option>low</option>
+                 <option>middle</option>
+                 <option>hight</option>
+            </select>
+            <button className="btn primary sort-btn"> Применить </button>
+          </div>
     )});
 
 export default Sorting;

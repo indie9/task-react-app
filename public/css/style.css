@@ -124,7 +124,6 @@ body {
 }
 .btn{
   height: 24px;
-  
   border: 1px solid #333333;
   box-sizing: border-box;
   border-radius: 5px;
@@ -145,6 +144,7 @@ body {
 
 .primary{
   background-color: #7B61FF;
+  color: white;
 }
 .primary:hover{
   background-color: #8A73FF;
@@ -180,6 +180,10 @@ body {
 .task{
   width: 100%;
   height: 70px;
+
+}
+.task:nth-child(2n){
+  background-color: #F2F2F2;
 }
 .task_inner{
   width: 100%;
@@ -187,29 +191,33 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-
+  margin:0 -7px;
+}
+.task_inner-item{
+  margin: 0 7px;
+  box-sizing: border-box;
 }
 .task_type{
-  flex-basis: 8%;
+  width: 8%;
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .task_name{
-  flex-basis: 47%;
+  width: 48%;
   display: flex;
   align-items: center;
 }
 .task_autor{
-  flex-basis: 15%;
+  width: 15%;
   display: flex;
   align-items: center;
 }
 .task_status{
-  flex-basis: 10%;
+  width: 10%;
   display: flex;
-
   align-items: center;
 }
 
@@ -231,7 +239,7 @@ body {
 }
 
 .task_priority{
-  flex-basis: 10%;
+  width: 10%;
   display: flex;
 
   align-items: center;
@@ -254,17 +262,98 @@ body {
 }
 
 .task_btn{
-  flex-basis: 10%;
+  width: 10%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
 }
-.custom-dropdown{
 
+.task_list{
+  border-radius: 3px;
+  border: solid 1px var(--inner-shadow);
 }
-
 
 .task_board{
   background-color: #ffffff;
   height: 100%;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px #B5B5B5;
+}
+
+.sorting_list{
+  width: 100%;
+  margin-bottom: 20px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 -7px 20px -7px
+}
+.sorting_item{
+  margin: 0 7px;
+  height: 100%;
+  border-color: #CFCFCF;
+  border-radius: 3px;
+  width: 100%;
+  color: var(--label-text);
+  box-sizing: border-box;
+}
+.sort-type{
+  width: 8%;
+}
+
+.sort-name{
+  width: 47%;
+
+}
+.sort-autor{
+  width: 15%;
+
+}
+.sort-status{
+  width: 10%;
+
+}
+.sort-priority{
+  width: 10%;
+
+}
+.sort-btn{
+  width: 10%;
+}
+
+
+.dropdown {
+  position: absolute;
+  display: inline-block;
+}
+
+/* Выпадающий контент (по умолчанию скрыт) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  z-index: 1;
+}
+
+/* Ссылки внутри выпадающего блока */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Изменяем цвет ссылки при наведении */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Показываем выпадающий блок при наведении */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Изменяем фоновый цвет вызывающей кнопки при выводе выпадающего блока */
+.btn:hover, .dropdown:hover .btn  {
+  background-color: #0b7dda;
 }
