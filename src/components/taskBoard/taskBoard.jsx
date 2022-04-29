@@ -15,8 +15,7 @@ const TaskBoard = () => {
   <section className="task_board">
     <Sorting />
     <div className="task_list">
-      <Task event={events[0]}/>
-      <Task event={events[1]}/>
+      {events.map(event => <Task event={event}/>)}
     </div>
 
   </section>

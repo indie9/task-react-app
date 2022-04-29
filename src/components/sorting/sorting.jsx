@@ -13,21 +13,32 @@ const Sorting = observer( () =>{
 
     return(
           <div className="sorting_list">
-            <select className="sorting_item sort-type">
-                <option selected disabled>Тип</option>
-                <option >Задача</option>
-                <option>Ошибка</option>
+            
+            <div class="sorting_item sort-type">
+              <span className="sorting_item-name">Тип</span>
+              <div class="sorting_item-checkbox">
 
-            </select>
+                <div><input type="checkbox" /> Задача</div>
+                <div><input type="checkbox" /> Ошибка</div>
+              </div>
+            </div>
+         
             <input
               type="text"
               placeholder="Задача"
               className="sorting_item sort-name"
             />
-            <select className="sorting_item sort-autor">
-                 <option>Onegin</option>
-                 <option>Pushkin</option>
-            </select>
+            
+            <div class="sorting_item sort-autor">
+              <span className="sorting_item-name">Автор</span>
+              <div class="sorting_item-checkbox">
+                <div><input type="checkbox" /> Онегеин</div>
+                <div><input type="checkbox" /> Пушкин</div>
+                <div><input type="checkbox" /> Онегеин</div>
+                <div><input type="checkbox" /> Пушкин</div>
+              </div>
+            </div>
+      
             <select className="sorting_item sort-status">
                  <option>ready</option>
                  <option>open</option>

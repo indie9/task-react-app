@@ -130,6 +130,8 @@ body {
   display: flex;
   text-align: center;
   justify-content: center;
+  text-decoration: none;
+  padding: 0 5px;
 }
 
 .default{
@@ -297,7 +299,41 @@ body {
   width: 100%;
   color: var(--label-text);
   box-sizing: border-box;
+  position: relative;
 }
+.sorting_item-name{
+  height: 25px;
+  display: block;
+  margin: auto;
+  border: var(--label-text) solid 1px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  color: var(--label-text);
+  padding: 0 5px;
+  
+  z-index: 99;
+  
+}
+.sorting_item-checkbox{
+  display: none;
+  width: 100%;
+  margin-top: -25px;
+  top: -2px;
+  padding: 5px;
+  padding-top: 25px;
+  box-sizing: border-box;
+  border: #715BE3 1px solid;
+  box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+  border-radius: 3px;
+  color: var(--text-color);
+  background-color: #fff;
+  z-index: 2;
+}
+
+.sorting_item:hover > .sorting_item-checkbox {
+display: block;
+}
+
 .sort-type{
   width: 8%;
 }
@@ -324,20 +360,42 @@ body {
 
 
 .dropdown {
-  position: absolute;
+  position: relative;
   display: inline-block;
 }
 
-/* Выпадающий контент (по умолчанию скрыт) */
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
+  left: -115px;
+  top:  35px;
+  padding: 0 5px;
+  width: 120px;
   z-index: 1;
+  background-color: white;
+  box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+  border-radius: 5px;
+  font-size: 12px;
+  line-height: 14px;  
 }
 
-/* Ссылки внутри выпадающего блока */
+.visable{
+  display: block;
+}
+.dropdown-btn{
+  color: var(--primary);
+  font-weight: 600;
+  width: 20px;
+  height: 20px;
+  border-radius: 3px;
+  text-align: center;
+}
+.dropdown-btn:hover,
+.dropdown-active{
+  background-color: var(--primary);
+  color: white;
+}
+
 .dropdown-content a {
   color: black;
   padding: 12px 16px;
@@ -345,15 +403,34 @@ body {
   display: block;
 }
 
-/* Изменяем цвет ссылки при наведении */
-.dropdown-content a:hover {background-color: #ddd}
+.dropdown-content p:hover {background-color: #ddd}
 
-/* Показываем выпадающий блок при наведении */
-.dropdown:hover .dropdown-content {
-  display: block;
+.taskPage_board{
+  background-color: #ffffff;
+  height: 100%;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px #B5B5B5;
+  display: flex;
+  flex-direction: row;
 }
-
-/* Изменяем фоновый цвет вызывающей кнопки при выводе выпадающего блока */
-.btn:hover, .dropdown:hover .btn  {
-  background-color: #0b7dda;
+.taskPage-data{
+  width: 26%;
+}
+.taskPage-info{
+  width: 35%;
+  padding: 0 20px;
+  border-right: #B5B5B5 solid 2px;
+  border-left: #B5B5B5 solid 2px;
+}
+.taskPage-comments{
+  width: 40%;
+  padding: 0 20px;
+}
+.taskPage-title{
+  color: var(--label-text);
+}
+.taskPage-textArea{
+  width: 100%;
+  height: 100px;
 }

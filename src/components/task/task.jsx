@@ -1,15 +1,16 @@
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ru";
 
 
-
-
 const Task = ({event}) => {
   const {_id,name,autor,type,status,priority} = event;
-
+  const [visableID, setVisableID] = useState()
+  const setVis = () => {
+    setVisableID(!visableID);
+  }
   return (
     <article className="task">
 
@@ -29,18 +30,31 @@ const Task = ({event}) => {
             </div>
             <div className={`task_inner-item task_priority ${priority}`}>{priority}</div>
 
-              <div className="task_btn">
-                <div className="dropdown">
-                    <button className="btn">
-                      <i >xxx</i>
-                    </button>
-                    <div className="dropdown-content">
-                      <a href="#">Ссылка 1</a>
-                      <a href="#">Ссылка 2</a>
-                      <a href="#">Ссылка 3</a>
-                    </div>
-                </div>
+            <div className="task_btn">
+              <div className="dropdown">
+                  <p className={`dropdown-btn ${visableID == true && "dropdown-active"}`} onClick={setVis} >
+                      <span>&#9776;</span>
+                  </p>
+                  <div className={`dropdown-content ${visableID == true && "visable"}`} id = {_id} >
+                    <Link
+                      to={`/form/${_id}`}
+                      type="text"
+                      className=""
+                      >
+                        Редактировать
+                    </Link>
+                    <p>Удалить</p>
+                    <p>На тестирование</p>
+                    <Link
+                      to={`/task/${_id}`}
+                      type="text"
+                      className=""
+                      >
+                        Переоткрыть
+                    </Link>
+                  </div>
               </div>
+            </div>
 
       </div>
     </article>
