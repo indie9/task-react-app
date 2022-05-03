@@ -1,56 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import { observer } from "mobx-react-lite";
-import { events } from "../../store/index";
+import { tasks } from "../../store/index";
 import { action } from "mobx"
+import Dropdown from "../dropdown/dropdown";
 
+const Sorting = observer( ({setPage}) =>{
 
-const Sorting = observer( () =>{
+  const [form,setForm] = useState({type:[],autor:[],status:[],priority:[]});
 
-  const sorting = action((evt) => {
-    events.filtredData = events[evt.target.value];
+  const subm = (evt) => {
+    evt.preventDefault();
+    let mults = document.getElementsByClassName("multiselect");
+    let boxes = document.getElementsByClassName("checkboxes");
+    for( let i = 0; i < boxes.length; i++){
+      boxes[i].style.display = "none";
+      mults[i].classList.remove("active-checkbox")
+    }
+    setPage(0);
+    tasks.filterOn(form);
+  }
 
-  });
 
     return(
-          <div className="sorting_list">
-            
-            <div class="sorting_item sort-type">
-              <span className="sorting_item-name">Тип</span>
-              <div class="sorting_item-checkbox">
+          <form className="sorting_list" onSubmit={subm}>
 
-                <div><input type="checkbox" /> Задача</div>
-                <div><input type="checkbox" /> Ошибка</div>
-              </div>
+            <div class="sorting_item sort-type">
+               <Dropdown type={"type"} values={[...new Set(tasks.data.map(item => item = item["type"]))]} searchForm={form} setSearchForm={setForm} />
             </div>
-         
+
             <input
               type="text"
               placeholder="Задача"
               className="sorting_item sort-name"
             />
-            
+
             <div class="sorting_item sort-autor">
-              <span className="sorting_item-name">Автор</span>
-              <div class="sorting_item-checkbox">
-                <div><input type="checkbox" /> Онегеин</div>
-                <div><input type="checkbox" /> Пушкин</div>
-                <div><input type="checkbox" /> Онегеин</div>
-                <div><input type="checkbox" /> Пушкин</div>
-              </div>
+            <Dropdown type={"autor"} values={[...new Set(tasks.data.map(item => item = item["autor"]))]} searchForm={form} setSearchForm={setForm}/>
             </div>
-      
-            <select className="sorting_item sort-status">
-                 <option>ready</option>
-                 <option>open</option>
-                 <option>complete</option>
-            </select>
-            <select className="sorting_item sort-priority">
-                 <option>low</option>
-                 <option>middle</option>
-                 <option>hight</option>
-            </select>
-            <button className="btn primary sort-btn"> Применить </button>
-          </div>
+
+            <div className="sorting_item sort-status">
+            <Dropdown type={"status"} values={[...new Set(tasks.data.map(item => item = item["status"]))]} searchForm={form} setSearchForm={setForm} />
+            </div>
+
+            <div className="sorting_item sort-priority">
+            <Dropdown type={"priority"} values={[...new Set(tasks.data.map(item => item = item["priority"]))]} searchForm={form} setSearchForm={setForm} />
+            </div>
+
+            <button className="btn primary sort-btn"  type="submit"> Применить </button>
+          </form>
+
     )});
 
 export default Sorting;

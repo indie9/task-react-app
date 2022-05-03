@@ -1,24 +1,24 @@
 import React from 'react';
 import Header from '../../components/header/header';
-import Filter from '../../components/filter/filter';
 import Event from '../../components/event/event';
 import { AppRoute } from '../../const.js';
 import Title from '../../components/title/title';
 import Task from '../../components/task/task';
-import { events } from '../../mocks';
+import { tasks } from '../../store';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 const TaskPage = () => {
 
 const {id} = useParams();
-const event = events.filter(item => item._id == id)[0];
+const event = tasks.data.filter(item => item._id == id)[0];
 
   return (
     <>
       <Header />
       <section className="main__wrapper">
         <Title />
-        <div className="taskPage_board">
+        <section className="board">
+          <section className="taskPage">
             <div className="taskPage-data">
                 <p className='taskPage-title'>Исполнитель</p>
                 <p>{event.autor}</p>
@@ -47,9 +47,8 @@ const event = events.filter(item => item._id == id)[0];
                 <p className='taskPage-title'>{event.autor} {event.date}</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
             </div>
-
-        </div>
-        
+          </section>
+        </section>
       </section>
     </>
 

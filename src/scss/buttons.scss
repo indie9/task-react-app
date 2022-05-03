@@ -1,0 +1,66 @@
+.btn{
+  height: 24px;
+  border: 1px solid #333333;
+  box-sizing: border-box;
+  border-radius: 5px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
+  padding: 0 5px;
+  margin: 0 5px;
+}
+
+.default{
+  background-color: #F4F4F4;
+}
+.default:hover{
+  background-color: #E1E1E1;
+}
+.default:active{
+  background-color: #CFCFCF;
+}
+
+.primary{
+  background-color: #7B61FF;
+  color: white;
+}
+.primary:hover{
+  background-color: #8A73FF;
+}
+.primary:active{
+  background-color: #715BE3;
+}
+
+.success{
+  background-color: #5EE48C;
+}
+.success:hover{
+  background-color: #80F0A6;
+}
+.success:active{
+  background-color: #4BD379;
+}
+
+.error{
+  background-color: #FF6161;
+}
+.error:hover{
+  background-color: #FF8080;
+}
+.error:active{
+  background-color: #D65D5D;
+}
+
+.disabled{
+  background-color: #B5B5B5;
+}
+
+.pag_buttons{
+  display: flex;
+  flex-direction: row;
+  width: 11vw;
+  margin-top: 20px;
+  justify-content: space-between;
+}
+

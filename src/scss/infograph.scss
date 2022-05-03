@@ -1,0 +1,24 @@
+
+
+.status-open{
+  background-color: #CCCCCC;
+}
+.status-inwork{
+  background-color: #FFC700;
+}
+.status-ready{
+  background-color: #4BD379;
+}
+
+.priority-low{
+  color: #3CA961;
+  background-image: url(../img/low_pr.png);
+}
+.priority-middle{
+  color: #E9B500;
+  background-image: url(../img/middle_pr.png);
+}
+.priority-height{
+  color: #D14343;
+  background-image: url(../img/hight_pr.png);
+}

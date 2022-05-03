@@ -6,8 +6,9 @@ import Title from '../../components/title/title';
 import { AppRoute } from '../../const.js';
 import { tasks } from '../../store';
 import { observer } from 'mobx-react-lite';
+import UserBoard from '../../components/userBoard/userBoard';
 
-const Main = observer(() => {
+const Users = observer(() => {
 
 
 
@@ -17,14 +18,13 @@ const Main = observer(() => {
       <section className="main__wrapper">
 
         <Title />
-        <section className='board'>
-          <TaskBoard tasks={tasks.filtredData} />
+        <section className="board">
+          <UserBoard />
         </section>
-
       </section>
     </>
 
   )
 });
 
-export default Main;
+export default Users;

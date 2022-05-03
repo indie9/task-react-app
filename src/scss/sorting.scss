@@ -1,0 +1,48 @@
+.sorting_list{
+  width: 100%;
+  margin-bottom: 20px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  margin: 0 -7px 20px -7px;
+
+  & .sorting_item{
+    margin: 0 7px;
+    height: 100%;
+    border-color: #CFCFCF;
+    border-radius: 3px;
+    width: 100%;
+    color: var(--label-text);
+    box-sizing: border-box;
+    position: relative;
+  }
+
+
+  & .sort-type{
+    width: 8%;
+  }
+
+  & .sort-name{
+    width: 47%;
+    padding-left: 5px;
+    margin: 2px 0;
+    box-shadow: inset 0px 0px 2px 1px #B5B5B5;
+    border-radius: 3px;
+    height: 24px;
+  }
+  & .sort-autor{
+    width: 15%;
+
+  }
+  & .sort-status{
+    width: 10%;
+
+  }
+  & .sort-priority{
+    width: 10%;
+
+  }
+  & .sort-btn{
+    width: 10%;
+  }
+}

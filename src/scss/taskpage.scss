@@ -1,0 +1,35 @@
+.taskPage_board{
+  background-color: #ffffff;
+  height: 100%;
+  min-height: 60vh;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 3px #B5B5B5;
+  display: flex;
+  flex-direction: row;
+}
+.taskPage-data{
+  width: 26%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+.taskPage-info{
+  display: flex;
+  flex-direction: column;
+  width: 35%;
+  padding: 0 20px;
+  border-right: #B5B5B5 solid 2px;
+  border-left: #B5B5B5 solid 2px;
+}
+.taskPage-comments{
+  width: 40%;
+  padding: 0 20px;
+}
+.taskPage-title{
+  color: var(--label-text);
+}
+.taskPage-textArea{
+  width: 100%;
+  height: 100px;
+}
