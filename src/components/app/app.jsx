@@ -1,6 +1,6 @@
 import React from 'react';
 import Main from '../../pages/main/main';
-
+import Profile from '../../pages/profile/profile';
 import Unfoud from '../../pages/unfound/unfoud';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
@@ -31,6 +31,10 @@ const App = observer(() => {
 
         <Route path={AppRoute.USERS} exact>
           <Users />
+        </Route>
+
+        <Route path={AppRoute.PROFILE} exact>
+          <Profile />
         </Route>
 
         <Route>

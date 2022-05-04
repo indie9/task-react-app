@@ -13,15 +13,26 @@ const Title = observer( () =>{
     const form = document.getElementById("formID");
     form.requestSubmit();
   };
+  
   const removeTask = () => {
     tasks.removeTask(id);
   }
-
+  let status
+  let taskName
+  if (path === AppRoute.TASK){
+    status = tasks.data.filter(item => item._id == id)[0].status
+    taskName = tasks.data.filter(item => item._id == id)[0].name
+  }
     return(
         <div className="title">
-            <span className="name">Задача</span>
+          <div className="sub-title">
+            {path === AppRoute.MAIN && "Задача" }
 
-            {path === AppRoute.MAIN &&
+            {path === AppRoute.TASK && <span className="name"> {taskName} </span>}
+            {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
+
+          </div>
+          {path === AppRoute.MAIN &&
               <div className="buttons">
                 <Link
                   to={`/form/`}
@@ -31,9 +42,9 @@ const Title = observer( () =>{
                   Добавить задачу
                 </Link>
               </div>
-            }
-
-            {path === AppRoute.TASK &&
+          }
+          
+          {path === AppRoute.TASK &&
               <div className="buttons">
                 <Link
                   to={AppRoute.MAIN}

@@ -7,11 +7,18 @@
   justify-content: space-between;
   align-items: center;
 
-  & .name{
-    font-weight: 300;
-    font-size: 24px;
-    line-height: 28px;
-    color: var(--text-color);
+  & .sub-title{
+    
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    & .name{
+      font-weight: 300;
+      font-size: 24px;
+      line-height: 28px;
+      color: var(--text-color);
+    }
+    
   }
   & .buttons{
     display: flex;

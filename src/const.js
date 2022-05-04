@@ -3,5 +3,5 @@ export const AppRoute = {
   TASK: '/task/:id?',
   EDIT_TASK: '/form/:id?',
   USERS: '/users',
-  PROFILE: '/profile'
+  PROFILE: '/profile/:id?'
 };

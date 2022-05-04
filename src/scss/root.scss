@@ -10,6 +10,8 @@
 @use './text_inputs.scss';
 @use  './event.scss';
 @use './title.scss';
+@use './profile.scss';
+
 html,
 body {
   height: 100%;
@@ -70,3 +72,13 @@ a{
 }
 
 
+.task_list{
+  border-radius: 3px;
+  border: solid 1px var(--inner-shadow);
+  margin-bottom: auto;
+}
+
+.pag_buttons{
+ display: flex;
+ flex-direction: row;
+}

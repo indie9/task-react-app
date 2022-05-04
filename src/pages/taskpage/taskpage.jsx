@@ -9,9 +9,9 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 
 const TaskPage = () => {
 
-const {id} = useParams();
-const event = tasks.data.filter(item => item._id == id)[0];
-
+  const {id} = useParams();
+  const event = tasks.data.filter(item => item._id == id)[0];
+  
   return (
     <>
       <Header />

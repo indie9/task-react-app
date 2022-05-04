@@ -42,7 +42,7 @@ const Event = observer( () =>{
     return (
         <form className="board__form" onSubmit={id ? handleToEdit : addEvent } id="formID">
 
-            <div className="data">
+            <div className="board__form-data">
 
                   <label for="autor" className='taskPage-title'>Исполнитель</label>
                   <select name="autor">
@@ -66,7 +66,7 @@ const Event = observer( () =>{
 
 
             </div>
-            <div className="info">
+            <div className="board__form-info">
                   <label for="autor" className='taskPage-title'>Название</label>
                   <input
                     type="text"
@@ -87,7 +87,7 @@ const Event = observer( () =>{
                   > </textarea>
 
             </div>
-            <div className="comments"></div>
+            <div className="board__form-comments"></div>
 
 
 

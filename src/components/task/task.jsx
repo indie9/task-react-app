@@ -3,7 +3,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ru";
-
+import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
+import { AppRoute } from "../../const";
 
 const Task = ({event}) => {
   const {_id,name,autor,type,status,priority} = event;
@@ -11,6 +12,7 @@ const Task = ({event}) => {
   const setVis = () => {
     setVisableID(!visableID);
   }
+  const location =  useLocation()
   return (
 
 
@@ -19,32 +21,34 @@ const Task = ({event}) => {
 
       <div className="task_inner">
           <div className="task_inner-item task_type">
-
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill={`${type == "error" ? "#00D1FF" : "#EB4F4F"}`}/>
-                    <circle cx="12" cy="12" r="6" fill="white"/>
-                </svg>
-
-
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill={`${type == "error" ? "#00D1FF" : "#EB4F4F"}`}/>
+                <circle cx="12" cy="12" r="6" fill="white"/>
+              </svg>
           </div>
+
           <div className="task_inner-item task_name">
              <Link to={`/task/${_id}`} >
              {name}
              </Link>
           </div>
-          <div to={`/task/${_id}`} className="task_inner-item task_autor">
 
+          {location.pathname==AppRoute.MAIN &&
+            <div  className="task_inner-item task_autor">
             {autor}
-
           </div>
+          }
           <div className="task_inner-item task_status" >
             <div className={`task_status-btn status-${status}`}>{status}</div>
           </div>
+
           <div className={`task_inner-item task_priority priority-${priority}`}>{priority}</div>
+          
+          {location.pathname==AppRoute.MAIN &&
           <div className="task_btn">
               <div className="dropdown">
                   <p className={`dropdown-btn ${visableID == true && "dropdown-active"}`} onClick={setVis} >
-                      <span>&#9776;</span>
+                      <span> &#9776;</span>
                   </p>
                   <div className={`dropdown-content ${visableID == true && "visable"}`} id = {_id} >
                     <Link
@@ -54,6 +58,7 @@ const Task = ({event}) => {
                       >
                         Редактировать
                     </Link>
+
                     <Link
                       to={`/form/${_id}`}
                       type="text"
@@ -62,6 +67,7 @@ const Task = ({event}) => {
                       >
                         Удалить
                     </Link>
+                    
                     <Link
                       to={`/form/${_id}`}
                       type="text"
@@ -80,6 +86,7 @@ const Task = ({event}) => {
                   </div>
               </div>
           </div>
+          } 
       </div>
 
     </article>
