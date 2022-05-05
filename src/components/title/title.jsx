@@ -87,6 +87,7 @@ const Title = observer( () =>{
                   </Link>
                 </div>
             }
+            <button className="bn default" onClick={submit}>submit</button>
             </div>
 
     )});
