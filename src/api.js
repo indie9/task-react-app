@@ -2,7 +2,8 @@ import { type } from "@testing-library/user-event/dist/type";
 import Header from "./components/header/header";
 import { events } from "./store";
 
-const url = 'https://fe-school-api.herokuapp.com/api/events'
+const url = 'http://93.95.97.34/api'
+
 
 const request = async (url, method = 'GET', body) => {
   const response = await fetch(url, {
@@ -18,7 +19,12 @@ const request = async (url, method = 'GET', body) => {
 }
 
 export const getEvents = () => {
-  return request(`${url}`);
+  console.log("hello")
+  return request(`${url}/tasks`, 'POST', {
+    "filter": {},
+    "page": 0,
+    "limit": 0
+  });
 }
 export const getOneEvent = (evt) => {
   return request(`${url}/${evt._id}`);

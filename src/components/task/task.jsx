@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { AppRoute } from "../../const";
 
 const Task = ({event}) => {
-  const {_id,name,autor,type,status,priority} = event;
+  const {id,title,assignedId,type,status,rank} = event;
   const [visableID, setVisableID] = useState()
   const setVis = () => {
     setVisableID(!visableID);
@@ -22,37 +22,37 @@ const Task = ({event}) => {
       <div className="task_inner">
           <div className="task_inner-item task_type">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill={`${type == "error" ? "#00D1FF" : "#EB4F4F"}`}/>
+                <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill={`${type == "bug" ? "#00D1FF" : "#EB4F4F"}`}/>
                 <circle cx="12" cy="12" r="6" fill="white"/>
               </svg>
           </div>
 
           <div className="task_inner-item task_name">
-             <Link to={`/task/${_id}`} >
-             {name}
+             <Link to={`/task/${id}`} >
+             {title}
              </Link>
           </div>
 
           {location.pathname==AppRoute.MAIN &&
             <div  className="task_inner-item task_autor">
-            {autor}
+            {assignedId}
           </div>
           }
           <div className="task_inner-item task_status" >
             <div className={`task_status-btn status-${status}`}>{status}</div>
           </div>
 
-          <div className={`task_inner-item task_priority priority-${priority}`}>{priority}</div>
-          
+          <div className={`task_inner-item task_priority priority-${rank}`}>{rank}</div>
+
           {location.pathname==AppRoute.MAIN &&
           <div className="task_btn">
               <div className="dropdown">
                   <p className={`dropdown-btn ${visableID == true && "dropdown-active"}`} onClick={setVis} >
                       <span> &#9776;</span>
                   </p>
-                  <div className={`dropdown-content ${visableID == true && "visable"}`} id = {_id} >
+                  <div className={`dropdown-content ${visableID == true && "visable"}`} id = {id} >
                     <Link
-                      to={`/form/${_id}`}
+                      to={`/form/${id}`}
                       type="text"
                       className=""
                       >
@@ -60,16 +60,16 @@ const Task = ({event}) => {
                     </Link>
 
                     <Link
-                      to={`/form/${_id}`}
+                      to={`/form/${id}`}
                       type="text"
                       className=""
                       style={{color:"red"}}
                       >
                         Удалить
                     </Link>
-                    
+
                     <Link
-                      to={`/form/${_id}`}
+                      to={`/form/${id}`}
                       type="text"
                       className=""
                       >
@@ -77,7 +77,7 @@ const Task = ({event}) => {
                     </Link>
 
                     <Link
-                      to={`/task/${_id}`}
+                      to={`/task/${id}`}
                       type="text"
                       className=""
                       >
@@ -86,7 +86,7 @@ const Task = ({event}) => {
                   </div>
               </div>
           </div>
-          } 
+          }
       </div>
 
     </article>

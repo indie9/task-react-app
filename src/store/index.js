@@ -5,12 +5,28 @@ import { eventsMock } from "../mocks";
 
 
 class TasksStore {
-  data = [...eventsMock];
+  data = [];
   preFiltredData = {type:[],autor:[],status:[],priority:[]};
-  filtredData = [...eventsMock];
+  filtredData = [];
+
   constructor () {
-    makeAutoObservable(this)
+    makeAutoObservable(this,{},{
+      autoBind: true,
+
+    })
+    onBecomeObserved(this, 'filtredData', this.fetch);
   }
+
+  *fetch() {
+    const response = yield getEvents();
+    this.filtredData = response.data;
+    this.data = response.data;
+  }
+
+
+
+
+
   removePreFilter(){
     this.preFiltredData = {type:[],autor:[],status:[],priority:[]};
   }

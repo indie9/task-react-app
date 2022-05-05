@@ -1,12 +1,15 @@
 
 
-.status-open{
+.status-opened{
   background-color: #CCCCCC;
 }
-.status-inwork{
+.status-inProgress{
   background-color: #FFC700;
 }
-.status-ready{
+.status-testing{
+  background-color: #FFC700;
+}
+.status-complete {
   background-color: #4BD379;
 }
 
@@ -18,7 +21,7 @@
   color: #E9B500;
   background-image: url(../img/middle_pr.png);
 }
-.priority-height{
+.priority-high{
   color: #D14343;
   background-image: url(../img/hight_pr.png);
 }
