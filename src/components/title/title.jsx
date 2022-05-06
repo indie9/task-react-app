@@ -10,7 +10,7 @@ const Title = observer( () =>{
   const { path } = useRouteMatch();
   const { id } = useParams();
   const submit = () => {
-    const form = document.getElementById("formID");
+    const form = document.getElementById("taskFormID");
     form.requestSubmit();
   };
   
@@ -35,7 +35,7 @@ const Title = observer( () =>{
           {path === AppRoute.MAIN &&
               <div className="buttons">
                 <Link
-                  to={`/form/`}
+                  to={`/form`}
                   type="button"
                   className="btn primary"
                 >
@@ -71,13 +71,13 @@ const Title = observer( () =>{
             }
             {path === AppRoute.EDIT_TASK &&
                 <div className="buttons">
-                  <Link
-                    to={`/form/${id}`}
-                    type="button"
+                  <button
                     className="btn primary"
+                    onClick={submit}
                   >
+                    
                     Сохранить
-                  </Link>
+                  </button>
                   <Link
                     to={AppRoute.MAIN}
                     type="button"
@@ -87,7 +87,6 @@ const Title = observer( () =>{
                   </Link>
                 </div>
             }
-            <button className="bn default" onClick={submit}>submit</button>
             </div>
 
     )});

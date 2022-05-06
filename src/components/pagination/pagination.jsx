@@ -6,7 +6,7 @@ import "moment/locale/ru";
 
 
 const Pagination = ({startPage,prevPage,nextPage,endPage,page,pages}) => {
-  console.log(page,pages.length)
+
   return (
     <div className="pag_buttons">
 

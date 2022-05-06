@@ -18,14 +18,30 @@ const request = async (url, method = 'GET', body) => {
   return await response.json();
 }
 
-export const getEvents = () => {
-  console.log("hello")
+export const getTasks = () => {
   return request(`${url}/tasks`, 'POST', {
     "filter": {},
     "page": 0,
     "limit": 0
   });
 }
+export const getUsers = () => {
+  return request(`${url}/users/all`);
+}
+export const userLogin = (data) => {
+  return request(`${url}/users/login`, 'POST', data);
+}
+
+export const getUser = (id) => {
+  return request(`${url}/users/${id}`);
+}
+export const addTask = ( (taskData) => {
+  return request(`${url}/tasks/createOrEdit`, 'PUT', taskData)
+})
+
+
+
+
 export const getOneEvent = (evt) => {
   return request(`${url}/${evt._id}`);
 }
