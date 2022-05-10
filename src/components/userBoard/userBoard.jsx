@@ -8,10 +8,11 @@ import { users } from '../../store';
 import Task from '../task/task';
 import { observer } from 'mobx-react-lite';
 import Pagination from '../pagination/pagination';
+import { Link } from 'react-router-dom';
 
 const UserBoard = observer(() => {
   const usersList = [...users.data]
-  console.log(usersList)
+
   const [page,setPage] = useState(0);
   const startPage = () => {
     setPage(0)
@@ -24,15 +25,15 @@ const UserBoard = observer(() => {
     setPage(page + 1)
   }
   const endPage = () => {
-    setPage(usersList.length%8 == 0 ?  Math.floor(usersList.length/8) - 1 :  Math.floor(usersList.length/8) )
+    setPage(usersList.length % 8 === 0 ?  Math.floor(usersList.length/8) - 1 :  Math.floor(usersList.length/8) )
   }
   return (
    <>
     <div className="task_list">
-        { usersList.map(item => <div className="userItem">{item.username}</div>) }
-        
+        { usersList.slice(page*8,(page + 1)*8).map(item => <div className="userItem"><Link to={`/profile/${item.id}`}>{item.username}</Link></div>) }
+
     </div>
-    <Pagination startPage={startPage} prevPage={prevPage} nextPage={nextPage }endPage={endPage} page={page} pages={users} />
+    <Pagination startPage={startPage} prevPage={prevPage} nextPage={nextPage } endPage={endPage} page={page} pages={usersList} />
     </>
   )
 });

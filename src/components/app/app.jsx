@@ -15,16 +15,16 @@ import Users from '../../pages/users/users';
 import { users } from '../../store';
 
 const App = observer(() => {
-  //localStorage.clear();
+
   const loginFlag = localStorage.getItem('userId');
   if (loginFlag){
     users.takeUser(loginFlag)
   }
   return (
     <BrowserRouter>
-      {loginFlag ? 
+      {loginFlag ?
       <Switch>
-        
+
         <Route path={AppRoute.MAIN} exact>
           <Main />
         </Route>

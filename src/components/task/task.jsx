@@ -5,9 +5,10 @@ import moment from "moment";
 import "moment/locale/ru";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { AppRoute } from "../../const";
-import { users } from "../../store";
+import { tasks, users } from "../../store";
+import { observer } from "mobx-react-lite";
 
-const Task = ({event}) => {
+const Task = observer( ({event}) => {
   const {id,title,assignedId,type,status,rank,userId} = event;
   const [visableID, setVisableID] = useState()
   const setVis = () => {
@@ -16,7 +17,10 @@ const Task = ({event}) => {
   const location =  useLocation()
   const userList = {};
   users.data.map(item => {userList[item.id] = item.username});
-
+  const changeStatus = (evt) => {
+    console.log(evt.target.value)
+    tasks.changeStatus(id,evt.target.value)
+  }
   return (
 
 
@@ -33,13 +37,13 @@ const Task = ({event}) => {
 
           <div className="task_inner-item task_name">
              <Link to={`/task/${id}`} >
-             {title}
+              {title}
              </Link>
           </div>
 
           {location.pathname==AppRoute.MAIN &&
             <div  className="task_inner-item task_autor">
-            {userList[userId] ? userList[userId] : "unknown user"}
+            {userList[assignedId] ? userList[assignedId] : "Свободно"}
           </div>
           }
           <div className="task_inner-item task_status" >
@@ -55,6 +59,7 @@ const Task = ({event}) => {
                       <span> &#9776;</span>
                   </p>
                   <div className={`dropdown-content ${visableID == true && "visable"}`} id = {id} >
+
                     <Link
                       to={`/form/${id}`}
                       type="text"
@@ -62,6 +67,7 @@ const Task = ({event}) => {
                       >
                         Редактировать
                     </Link>
+
 
                     <Link
                       to={`/form/${id}`}
@@ -72,21 +78,46 @@ const Task = ({event}) => {
                         Удалить
                     </Link>
 
-                    <Link
-                      to={`/form/${id}`}
-                      type="text"
-                      className=""
-                      >
-                        На тестирование
-                    </Link>
+                    {(status === "opened") &&
+                        <button
+                        className="btn default"
+                        onClick={changeStatus}
+                        value={"inProgress"}
+                        >
+                          Взять в работу
+                        </button>
+                    }
+                    {(status === "inProgress" || status === "testing" || status === "complete") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"opened"}
+                        >
+                          Переоткрыть
+                        </button>
+                    }
+                    {(status === "inProgress") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"testing"}
+                        >
+                          На тестирование
+                      </button>
+                    }
+                    {(status === "inProgress" || status === "testing") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"complete"}
+                        >
+                          Готово
+                      </button>
+                    }
 
-                    <Link
-                      to={`/task/${id}`}
-                      type="text"
-                      className=""
-                      >
-                        Переоткрыть
-                    </Link>
+
+
+
                   </div>
               </div>
           </div>
@@ -97,6 +128,6 @@ const Task = ({event}) => {
 
 
   );
-};
+});
 
 export default Task;

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback,useState } from "react";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import moment from "moment";
 import { tasks } from '../../store';
@@ -12,15 +12,18 @@ const Event = observer( () =>{
 
       const { id } = useParams();
 
-      
       const usersList = users.usersList;
-      console.log(Object.keys(usersList));
 
-      const [form, setForm] = React.useState(  
-        id 
-        ? 
-        tasks.data.filter(item => item.id === id)[0] 
-        : 
+
+
+
+
+
+      const [form, setForm] = React.useState(
+        id
+        ?
+        {...tasks.currentTask}
+        :
         {
           assignedId: "",
           dateOfCreation: new Date(),
@@ -34,6 +37,9 @@ const Event = observer( () =>{
           userId: users.profileData.id
       }
       )
+      if (!form.id && id){
+        tasks.getTask(id).then(() => setForm({...tasks.currentTask}) )
+      }
       console.log(form);
       const handleFieldChange = (evt) => {
         const { name, value } = evt.target;
@@ -43,13 +49,16 @@ const Event = observer( () =>{
       const handleToEdit = (evt) => {
         console.log("edit");
         evt.preventDefault();
+        tasks.addTask(form)
+        .then(() => window.location.href = '/')
       }
       const addEvent = (evt) => {
         console.log("add");
         evt.preventDefault();
-        tasks.addTaskk(form);
+        tasks.addTask(form)
+        .then(() => window.location.href = '/')
       }
-      
+
 
     return (
         <form className="board__form" onSubmit={id ? handleToEdit : addEvent } id="taskFormID">
@@ -79,7 +88,7 @@ const Event = observer( () =>{
                     <option selected={form.rank == "low"} value={"low"}> Низкий</option>
                     <option selected={form.rank == "medium"} value={"medium"}> Средний</option>
                     <option selected={form.rank == "high "} value={"high"}> Высокий</option>
-                    
+
                   </select>
 
 

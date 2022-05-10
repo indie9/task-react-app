@@ -12,8 +12,11 @@ const Header = observer( () => {
   const setVis = () => {
     setVisableID(!visableID);
   }
-  const [profileData,setProfileData] = useState(users.profileData);
 
+  const logOut = () => {
+    localStorage.clear();
+    window.location.reload();
+  }
     return (
       <section className="header">
         <section className="header_wrap">
@@ -35,18 +38,18 @@ const Header = observer( () => {
           </div>
           <div className="header_wrap-profile">
 
-              <span className="username">{profileData.username}</span>
+              <span className="username">{users.profileData.username}</span>
               <div className="userfoto ">
-                  <img className={`profile_foto`} onClick={setVis} src="https://upload.wikimedia.org/wikipedia/ru/d/d9/Vin_Diesel_as_Groot.jpeg?20210722164205" alt="" width={42} height={42} />
+                  <img className={`profile_foto`} onClick={setVis} src={users.profileData.photoUrl} alt="" width={42} height={42} />
                   <div className={`dropdown-content ${(visableID == true) && "visable"}`} >
-                    <Link to="/profile/kolya">Посмотреть профиль</Link>
-                    <Link to="/" style={{color : "red"}}>Удалить</Link>
+                    <Link to={`/profile/${users.profileData.id}`} >Посмотреть профиль</Link>
+                    <button className='btn default' onClick={logOut} style={{color : "red"}}> Выйти </button>
                   </div>
               </div>
-   
+
 
           </div>
-  
+
         </section>
       </section>
     )

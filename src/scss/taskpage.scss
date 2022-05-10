@@ -24,9 +24,13 @@
   }
   &-title{
     color: var(--label-text);
+    margin: 0 0 5px 0;
   }
   &-textArea{
     width: 100%;
     height: 100px;
+  }
+  & p{
+    margin: 0 0 20px 0;
   }
 }

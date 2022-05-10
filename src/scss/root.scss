@@ -11,6 +11,7 @@
 @use  './event.scss';
 @use './title.scss';
 @use './profile.scss';
+@use './modal_window.scss';
 
 html,
 body {
@@ -81,4 +82,8 @@ a{
 .pag_buttons{
  display: flex;
  flex-direction: row;
+}
+
+.hidden{
+  display: none;
 }

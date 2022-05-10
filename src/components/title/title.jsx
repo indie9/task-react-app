@@ -5,32 +5,36 @@ import { action } from "mobx"
 import { Link,useRouteMatch } from "react-router-dom";
 import { AppRoute } from "../../const";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
-
-const Title = observer( () =>{
+import { users } from "../../store/index";
+const Title = observer( ({mode}) =>{
   const { path } = useRouteMatch();
   const { id } = useParams();
   const submit = () => {
     const form = document.getElementById("taskFormID");
     form.requestSubmit();
   };
-  
+
   const removeTask = () => {
     tasks.removeTask(id);
   }
   let status
   let taskName
-  if (path === AppRoute.TASK){
-    status = tasks.data.filter(item => item._id == id)[0].status
-    taskName = tasks.data.filter(item => item._id == id)[0].name
+  if (path === "AppRoute.TASK"){
+    status = tasks.data.filter(item => item._id === id)[0].status
+    taskName = tasks.data.filter(item => item._id === id)[0].name
   }
+  const editProfile = () => {
+    const modal = document.getElementsByClassName("edit_profile_modal")[0];
+    modal.classList.remove("hidden");
+  }
+  const profile = {...users.currentUserData};
     return(
         <div className="title">
           <div className="sub-title">
             {path === AppRoute.MAIN && "Задача" }
-
             {path === AppRoute.TASK && <span className="name"> {taskName} </span>}
             {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
-
+            {mode === "Profile" && <span className="name"> {profile.username} </span> }
           </div>
           {path === AppRoute.MAIN &&
               <div className="buttons">
@@ -43,7 +47,7 @@ const Title = observer( () =>{
                 </Link>
               </div>
           }
-          
+
           {path === AppRoute.TASK &&
               <div className="buttons">
                 <Link
@@ -75,7 +79,7 @@ const Title = observer( () =>{
                     className="btn primary"
                     onClick={submit}
                   >
-                    
+
                     Сохранить
                   </button>
                   <Link
@@ -86,6 +90,30 @@ const Title = observer( () =>{
                     Отмена
                   </Link>
                 </div>
+            }
+
+            {mode === "Profile" &&
+              <div className="buttons">
+
+
+                <Link
+                to={`/form`}
+                type="button"
+                className="btn default"
+                >
+                  Добавить задачу
+                </Link>
+                {users.profileData.id === id &&
+                  <button
+                  className="btn primary"
+                  onClick={editProfile}
+                  >
+                  Редактировать
+                  </button>
+                }
+
+
+            </div>
             }
             </div>
 

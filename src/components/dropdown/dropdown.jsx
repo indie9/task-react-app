@@ -1,8 +1,9 @@
 import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { tasks } from "../../store";
-
+import { users } from "../../store";
 const Dropdown = ({type,values,searchForm,setSearchForm}) => {
+
   //колличество выбраных пунктов
   const [count,setCount] = useState(0);
 
@@ -39,7 +40,22 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
           <div className="overSelect"></div>
         </div>
         <div id={`checkboxes${type}`} className="checkboxes" style={{display: "none"}}>
-            {values.map((item) => (
+            {type === "assignedUsers"
+            ?
+            Object.entries(values).map((item) => (
+              <label for={item}>
+                <input
+                type="checkbox"
+                id={item[0]}
+                name={type}
+                value={item[0]}
+                onChange={preFilter}
+                />
+                {item[1]}
+              </label>
+            ))
+            :
+            values.map((item) => (
               <label for={item}>
                 <input
                 type="checkbox"
@@ -50,7 +66,8 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
                 />
                 {item}
               </label>
-            ))}
+            ))
+            }
         </div>
       </div>
   );

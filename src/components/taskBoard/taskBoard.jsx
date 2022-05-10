@@ -6,9 +6,9 @@ import { tasks } from '../../store';
 import Task from '../task/task';
 import { observer } from 'mobx-react-lite';
 import Pagination from '../pagination/pagination';
-const TaskBoard = ({tasks}) => {
+const TaskBoard =observer( ({tasks}) => {
   const location = useLocation();
- 
+
   const [page,setPage] = useState(0);
   const startPage = () => {
     setPage(0)
@@ -35,6 +35,6 @@ const TaskBoard = ({tasks}) => {
     <Pagination startPage={startPage} prevPage={prevPage} nextPage={nextPage }endPage={endPage} page={page} pages={tasks} />
   </>
   )
-};
+});
 
 export default TaskBoard;
