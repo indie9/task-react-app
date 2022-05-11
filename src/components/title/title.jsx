@@ -66,7 +66,7 @@ const Title = observer( ({mode}) =>{
                     }
                     {(status === "inProgress" || status === "testing" || status === "complete") &&
                         <button
-                        className=""
+                        className="btn default"
                         onClick={changeStatus}
                         value={"opened"}
                         >
@@ -75,7 +75,7 @@ const Title = observer( ({mode}) =>{
                     }
                     {(status === "inProgress") &&
                         <button
-                        className=""
+                        className="btn primary"
                         onClick={changeStatus}
                         value={"testing"}
                         >
@@ -84,7 +84,7 @@ const Title = observer( ({mode}) =>{
                     }
                     {(status === "inProgress" || status === "testing") &&
                         <button
-                        className=""
+                        className="btn success"
                         onClick={changeStatus}
                         value={"complete"}
                         >

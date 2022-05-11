@@ -39,7 +39,7 @@ const Event = observer( () =>{
       if (!form.id && id){
         tasks.getTask(id).then(() => setForm({...tasks.currentTask}) )
       }
-      console.log(form);
+
       const handleFieldChange = (evt) => {
         const { name, value } = evt.target;
         setForm({ ...form, [name]: value})

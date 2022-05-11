@@ -23,6 +23,19 @@ const Task = observer( ({event,userList}) => {
   const deleteTask =  () =>{
     tasks.deleteTask(id);
   }
+
+  useEffect(() => {
+    const onClick = e => {
+      const dropBTN = document.getElementById(id);
+      const dropContent = document.getElementById(`drop${id}`);
+      if (!dropBTN.contains(e.target) && !dropContent.contains(e.target) ){
+        setVisableID(false);
+      }
+    }
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  });
+
   return (
     <article className="task">
 
@@ -41,7 +54,7 @@ const Task = observer( ({event,userList}) => {
              </Link>
           </div>
 
-          {location.pathname==AppRoute.MAIN &&
+          {location.pathname === AppRoute.MAIN &&
             <div  className="task_inner-item task_autor">
             {userList[assignedId] ? userList[assignedId] : "Свободно"}
           </div>
@@ -52,13 +65,13 @@ const Task = observer( ({event,userList}) => {
 
           <div className={`task_inner-item task_priority priority-${rank}`}>{rank}</div>
 
-          {location.pathname==AppRoute.MAIN &&
+          {location.pathname === AppRoute.MAIN &&
           <div className="task_btn">
-              <div className="dropdown">
-                  <p className={`dropdown-btn ${visableID == true && "dropdown-active"}`} onClick={setVis} >
+              <div className="dropdown" id={`drop${id}`}>
+                  <p className={`dropdown-btn ${visableID === true && "dropdown-active"}`} onClick = {setVis} >
                       <span> &#9776;</span>
                   </p>
-                  <div className={`dropdown-content ${visableID == true && "visable"}`} id = {id} >
+                  <div className={`dropdown-content ${visableID === true && "visable"}`} id = {id} >
 
                     <Link
                       to={`/form/${id}`}
