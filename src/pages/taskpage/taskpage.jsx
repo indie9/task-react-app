@@ -17,13 +17,18 @@ const TaskPage =observer( () => {
   const [comment,setComment] = useState("");
   const comments = [...tasks.currentComments];
   const taskTime = tasks.currentTask.timeInMinutes;
+
   if (!currentTask.id ){
     tasks.getTask(id).then(() => setCurrentTask({...tasks.currentTask}));
   }
   if (!usersList[users.profileData.id] ){
-    users.usersFetch().then(() => setUsersList({...users.usersList}));
+    users.fetch().then(() => setUsersList({...users.usersList}));
   }
+  const [userList,setUserList] = useState({});
 
+  useEffect(() => {
+    users.allUsersFetch().then(() => setUserList(users.allUsers))
+  })
 
 
   const handleComment = (evt) => {
@@ -110,10 +115,10 @@ const TaskPage =observer( () => {
             <div className="taskPage-data">
 
                 <p className='taskPage-title'>Исполнитель</p>
-                <p>{currentTask ? usersList[currentTask.assignedId]: "loading.." }</p>
+                <p>{currentTask ? userList[currentTask.assignedId]: "loading.." }</p>
 
                 <p className='taskPage-title'>Автор задачи</p>
-                <p>{currentTask ? usersList[currentTask.userId]: "loading.." }</p>
+                <p>{currentTask ? userList[currentTask.userId]: "loading.." }</p>
 
                 <p className='taskPage-title'>Тип запроса</p>
                 <p>{currentTask ? currentTask.type: "loading.." }</p>
@@ -148,7 +153,7 @@ const TaskPage =observer( () => {
                 <div className="comments-list">
                   {comments.map(item => (
                     <div className="comment-item">
-                      <p className='comment-title'>{usersList[item.userId]} {item.userId === users.profileData.id && <button type="button" className='btn error' value={item.id} onClick={commentDelete}>Удалить</button>}</p>
+                      <p className='comment-title'>{userList[item.userId]} {item.userId === users.profileData.id && <button type="button" className='btn error' value={item.id} onClick={commentDelete}>Удалить</button>}</p>
                       <p className='comment-body'>{item.text}</p>
                     </div>
                   ))}

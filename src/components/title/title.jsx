@@ -17,12 +17,17 @@ const Title = observer( ({mode}) =>{
   const removeTask = () => {
     tasks.removeTask(id);
   }
-  let status
-  let taskName
-  if (path === "AppRoute.TASK"){
-    status = tasks.data.filter(item => item._id === id)[0].status
-    taskName = tasks.data.filter(item => item._id === id)[0].name
+
+  const changeStatus =action((evt) => {
+    tasks.changeStatus(id,evt.target.value)
+  })
+  const deleteTask =  () =>{
+    tasks.deleteTask(id);
+    window.location.href = '/';
+
   }
+  const status = tasks.currentTask.status;
+  const title = tasks.currentTask.title
   const editProfile = () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
     modal.classList.remove("hidden");
@@ -32,7 +37,7 @@ const Title = observer( ({mode}) =>{
         <div className="title">
           <div className="sub-title">
             {path === AppRoute.MAIN && "Задача" }
-            {path === AppRoute.TASK && <span className="name"> {taskName} </span>}
+            {path === AppRoute.TASK && <span className="name"> {title} </span>}
             {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
             {mode === "Profile" && <span className="name"> {profile.username} </span> }
           </div>
@@ -50,13 +55,43 @@ const Title = observer( ({mode}) =>{
 
           {path === AppRoute.TASK &&
               <div className="buttons">
-                <Link
-                  to={AppRoute.MAIN}
-                  type="button"
-                  className="btn default"
-                >
-                  Взять в работу
-                </Link>
+                 {(status === "opened") &&
+                        <button
+                        className="btn default"
+                        onClick={changeStatus}
+                        value={"inProgress"}
+                        >
+                          Взять в работу
+                        </button>
+                    }
+                    {(status === "inProgress" || status === "testing" || status === "complete") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"opened"}
+                        >
+                          Переоткрыть
+                        </button>
+                    }
+                    {(status === "inProgress") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"testing"}
+                        >
+                          На тестирование
+                      </button>
+                    }
+                    {(status === "inProgress" || status === "testing") &&
+                        <button
+                        className=""
+                        onClick={changeStatus}
+                        value={"complete"}
+                        >
+                          Готово
+                      </button>
+                    }
+
                 <Link
                   to={`/form/${id}`}
                   type="button"
@@ -64,13 +99,12 @@ const Title = observer( ({mode}) =>{
                 >
                   Редактировать
                 </Link>
-                <Link
-                  to={`/`}
-                  onClick={removeTask}
-                  className="btn error"
+                <button
+                  className="btn default"
+                  onClick={deleteTask}
                 >
                   Удалить
-                </Link>
+                </button>
               </div>
             }
             {path === AppRoute.EDIT_TASK &&

@@ -1,16 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import { tasks } from "../../store/index";
 import { action } from "mobx"
 import Dropdown from "../dropdown/dropdown";
 import { users } from "../../store/index"
 
-const Sorting = observer( ({setPage}) =>{
-  //const userList = users.usersList;
+const Sorting = observer( () =>{
+
   const [form,setForm] = useState({type:[],query: "" , assignedUsers:[],status:[],rank:[]});
   const handlChange = (ev) => {
     setForm({...form, query: ev.target.value})}
-  const userList = {...users.usersList}
+    const [userList,setUserList] = useState({});
+
+    useEffect(() => {
+      users.allUsersFetch().then(() => setUserList(users.allUsers))
+    })
   const subm = action((evt) => {
     evt.preventDefault();
     let mults = document.getElementsByClassName("multiselect");
@@ -19,8 +23,7 @@ const Sorting = observer( ({setPage}) =>{
       boxes[i].style.display = "none";
       mults[i].classList.remove("active-checkbox")
     }
-    setPage(0);
-    console.log(form);
+    //document.getElementsByClassName('sorting_list')[0].reset();
     tasks.filterOn(form);
 
   })

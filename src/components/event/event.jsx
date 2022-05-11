@@ -1,10 +1,9 @@
-import React, { useCallback,useState } from "react";
+import React, { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import moment from "moment";
-import { tasks } from '../../store';
+import { tasks, users } from '../../store';
 import { AppRoute } from "../../const"
 import { useHistory } from "react-router-dom";
-import { users } from "../../store";
 import { observer } from "mobx-react-lite";
 import Dropdown from "../dropdown/dropdown";
 
@@ -12,11 +11,11 @@ const Event = observer( () =>{
 
       const { id } = useParams();
 
-      const usersList = users.usersList;
+      const [userList,setUserList] = useState({});
 
-
-
-
+      useEffect(() => {
+        users.allUsersFetch().then(() => setUserList(users.allUsers))
+      })
 
 
       const [form, setForm] = React.useState(
@@ -69,7 +68,7 @@ const Event = observer( () =>{
 
                   <select name="assignedId" onChange={handleFieldChange}>
                     <option disabled selected>Исполнитель</option>
-                    {Object.keys(usersList).map(item => <option selected={item == form.user} value={item}> {usersList[item]}  </option>)}
+                    {Object.keys(userList).map(item => <option selected={item === form.assignedId} value={item}> {userList[item]}  </option>)}
                   </select>
 
                   <label for="type" className='taskPage-title'>Тип</label>

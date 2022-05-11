@@ -63,7 +63,6 @@ export const getComments = ( (id) => {
 })
 
 export const addComment = ( (commentData) => {
-
   return request(`${url}/comments/createOrEdit`, 'PUT', commentData)
 })
 export const removeComment = ( (id) => {

@@ -1,5 +1,5 @@
 import { keyboard } from "@testing-library/user-event/dist/keyboard";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 import "moment/locale/ru";
@@ -8,18 +8,16 @@ import { AppRoute } from "../../const";
 import { tasks, users } from "../../store";
 import { observer } from "mobx-react-lite";
 
-const Task = observer( ({event}) => {
+const Task = observer( ({event,userList}) => {
   const {id,title,assignedId,type,status,rank,userId} = event;
   const [visableID, setVisableID] = useState()
   const setVis = () => {
     setVisableID(!visableID);
   }
   const location =  useLocation()
-  const userList = users.data;
 
-  console.log(userList)
   const changeStatus = (evt) => {
-    console.log(evt.target.value)
+
     tasks.changeStatus(id,evt.target.value)
   }
   const deleteTask =  () =>{
@@ -74,7 +72,7 @@ const Task = observer( ({event}) => {
                     <button
                       className="btn default"
                       onClick={deleteTask}
-                      
+
                       >
                         Удалить
                     </button>

@@ -73,8 +73,9 @@ class TasksStore {
   *changeStatus(id,status){
     yield changeStatus(id,status);
     yield this.fetch();
+    yield this.getTask(id);
   }
-  
+
 }
 
 class UsersStore {
@@ -89,9 +90,9 @@ class UsersStore {
       autoBind: true,
       profileData: computed,
     })
-   
+
     onBecomeObserved(this, 'data', this.fetch);
-    
+
   }
 
   *fetch() {
@@ -100,14 +101,11 @@ class UsersStore {
     this.data  = response.data;
     this.data.map(item => {this.usersList[item.id] = item.username});
     this.pagination.total = response.total;
-    
+
   }
   *allUsersFetch() {
     const response = yield getAllUsers();
-    console.log('all users',response)
     response.map(item => {this.allUsers[item.id] = item.username});
-   
-    console.log(this.allUsers)
   }
   *getLogin(form) {
     const response = yield userLogin(form);
