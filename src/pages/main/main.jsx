@@ -9,16 +9,16 @@ import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
 
-
-
+  
+  console.log(tasks.pagination.total)
   return (
     <>
       <Header />
       <section className="main__wrapper">
-
+      
         <Title />
         <section className='board'>
-          <TaskBoard tasks={tasks.filtredData} />
+          <TaskBoard taskList={tasks.filtredData} />
         </section>
 
       </section>

@@ -1,5 +1,5 @@
 import { computed, makeAutoObservable, onBecomeObserved } from "mobx";
-import {  getTasks, getUsers, userLogin, getUser, addTask,getTask, editUser, getComments,addComment, removeComment, addTime,changeStatus } from "../api";
+import {  getTasks, getUsers, getAllUsers, userLogin, getUser, addTask,getTask, editUser, getComments,addComment, removeComment, addTime,changeStatus, deleteTask } from "../api";
 import moment from "moment";
 import { eventsMock } from "../mocks";
 
@@ -10,7 +10,7 @@ class TasksStore {
   filtredData = [];
   currentTask ={};
   currentComments = [];
-
+  pagination = {limit:8, page:0, total:0};
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
@@ -19,19 +19,20 @@ class TasksStore {
       preFiltredData: computed,
       //currentComments: computed
     })
-    onBecomeObserved(this, 'filtredData', this.tasksFetch);
+    onBecomeObserved(this, 'filtredData', this.fetch);
   }
 
-  *tasksFetch() {
-    const response = yield getTasks(this.preFiltredData);
+  *fetch() {
+    const response = yield getTasks(this.preFiltredData,this.pagination.page);
     this.filtredData = response.data;
+    this.pagination.total = response.total;
     this.data = response.data;
     this.currentTask = {};
   }
 
   *addTask(data){
     yield addTask(data);
-    yield this.tasksFetch();
+    yield this.fetch();
   }
 
   *getTask(id){
@@ -41,10 +42,16 @@ class TasksStore {
     this.currentComments = res;
   }
 
+  *deleteTask(id){
+    yield deleteTask(id);
+    yield this.fetch();
+  }
+
   filterOn(form){
-    console.log(form);
-    this.preFiltredData  = form;
-    this.tasksFetch();
+    console.log("form",form);
+    this.preFiltredData = form;
+    this.pagination.page = 0;
+    this.fetch();
   }
   removePreFilter(){
     this.preFiltredData = {type:[],autor:[],status:[],priority:[]};
@@ -65,28 +72,42 @@ class TasksStore {
   }
   *changeStatus(id,status){
     yield changeStatus(id,status);
-    yield this.tasksFetch();
+    yield this.fetch();
   }
+  
 }
 
 class UsersStore {
   data = [];
+  allUsers = [];
   usersList = {};
   profileData = {};
   currentUserData = {};
+  pagination = {limit:8, page:0, total:0};
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
       profileData: computed,
     })
-    onBecomeObserved(this, 'data', this.usersFetch);
+   
+    onBecomeObserved(this, 'data', this.fetch);
+    
   }
 
-  *usersFetch() {
-    const response = yield getUsers();
-    this.data  = response;
+  *fetch() {
+    const response = yield getUsers(this.pagination.page);
+    console.log('hitr',response)
+    this.data  = response.data;
     this.data.map(item => {this.usersList[item.id] = item.username});
-
+    this.pagination.total = response.total;
+    
+  }
+  *allUsersFetch() {
+    const response = yield getAllUsers();
+    console.log('all users',response)
+    response.map(item => {this.allUsers[item.id] = item.username});
+   
+    console.log(this.allUsers)
   }
   *getLogin(form) {
     const response = yield userLogin(form);

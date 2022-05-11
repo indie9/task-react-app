@@ -12,12 +12,11 @@ import TaskBoard from "../taskBoard/taskBoard";
 const Bio = observer( () =>{
 
       const profile = {...users.currentUserData};
-      console.log(profile)
-      if (!(JSON.stringify(tasks.preFiltredData) === JSON.stringify({"userIds":[ profile.id] }))){
-        tasks.filterOn({"userIds":[ profile.id] });
+      
+      if (!(JSON.stringify(tasks.preFiltredData) === JSON.stringify({"assignedUsers":[ profile.id] }))){
+        tasks.filterOn({"assignedUsers":[ profile.id] });
       }
-
-
+    
     return (
         <section className="board__profile" >
             <article className="board__profile-bio" >
@@ -32,7 +31,7 @@ const Bio = observer( () =>{
             </article>
             <article className="board__profile-tasks" >
                 <p className="title"> Задачи </p>
-                <TaskBoard tasks={tasks.filtredData} />
+                <TaskBoard taskList={tasks.filtredData} />
             </article>
         </section>
     )});

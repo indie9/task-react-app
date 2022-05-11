@@ -18,19 +18,28 @@ const request = async (url, method = 'GET', body) => {
   return await response.json();
 }
 
-export const getTasks = (preFilter) => {
-  console.log(preFilter)
+export const getTasks = (preFilter,page) => {
   return request(`${url}/tasks`, 'POST', {
     "filter": {
       ...preFilter
     },
-    "page": 0,
-    "limit": 100
+    "page": page,
+    "limit": 8
   });
 }
-export const getUsers = () => {
+
+export const getUsers = (page) => {
+  return request(`${url}/users`, 'POST', {
+    "filter": {},
+    "page": page,
+    "limit": 8
+  });
+}
+export const getAllUsers = () => {
   return request(`${url}/users/all`);
 }
+
+
 export const userLogin = (data) => {
   return request(`${url}/users/login`, 'POST', data);
 }
@@ -67,28 +76,8 @@ export const changeStatus = ( (id,status) => {
   return request(`${url}/tasks/${id}/status/${status}`, 'PATCH')
 })
 
-export const getOneEvent = (evt) => {
-  return request(`${url}/${evt._id}`);
+export const deleteTask = (id) => {
+  console.log(`${url}/tasks/${id}`)
+  return request(`${url}/tasks/${id}`,'DELETE');
 }
 
-export const addEvent = (data => {
-  const eventData ={
-    ...data,
-    favorite: false,
-    archive: false,
-  }
-  return request(`${url}`, 'POST', eventData)
-})
-
-export const deleteEvent = (id) => {
-  return request(`${url}/${id}`,'DELETE');
-}
-
-export const editEvent = (data) => {
-  return request(`${url}`, 'PUT', data);
-}
-
-export const deleteArchive = () => {
-  return request(`${url}/archive/delete`, 'DELETE');
-
-}

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { users } from '../../store';
 import { observer } from 'mobx-react-lite';
+import { tasks } from '../../store';
 
 const Header = observer( () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const Header = observer( () => {
             </svg>
           </Link>
          <div className="header_wrap-group-lnk">
-            <Link to={AppRoute.MAIN} className={`lnk ${location.pathname != AppRoute.USERS && 'lnk-active'} `}> Задачи</Link>
+            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${location.pathname != AppRoute.USERS && 'lnk-active'} `}> Задачи</Link>
             <Link to={AppRoute.USERS} className={`lnk ${location.pathname === AppRoute.USERS && 'lnk-active'}`}>Пользователи</Link>
           </div>
           <div className="header_wrap-profile">

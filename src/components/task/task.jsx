@@ -15,19 +15,21 @@ const Task = observer( ({event}) => {
     setVisableID(!visableID);
   }
   const location =  useLocation()
-  const userList = {};
-  users.data.map(item => {userList[item.id] = item.username});
+  const userList = users.data;
+
+  console.log(userList)
   const changeStatus = (evt) => {
     console.log(evt.target.value)
     tasks.changeStatus(id,evt.target.value)
   }
+  const deleteTask =  () =>{
+    tasks.deleteTask(id);
+  }
   return (
-
-
     <article className="task">
 
-
       <div className="task_inner">
+
           <div className="task_inner-item task_type">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M0 5C0 2.23858 2.23858 0 5 0H19C21.7614 0 24 2.23858 24 5V19C24 21.7614 21.7614 24 19 24H5C2.23858 24 0 21.7614 0 19V5Z" fill={`${type !== "bug" ? "#00D1FF" : "#EB4F4F"}`}/>
@@ -69,14 +71,13 @@ const Task = observer( ({event}) => {
                     </Link>
 
 
-                    <Link
-                      to={`/form/${id}`}
-                      type="text"
-                      className=""
-                      style={{color:"red"}}
+                    <button
+                      className="btn default"
+                      onClick={deleteTask}
+                      
                       >
                         Удалить
-                    </Link>
+                    </button>
 
                     {(status === "opened") &&
                         <button
