@@ -133,7 +133,9 @@ const TaskPage =observer( () => {
                 <p>{currentTask ? currentTask.dateOfUpdate: "loading.." }</p>
 
                 <p className='taskPage-title'>Затрачено времени</p>
-                <p>{currentTask ? taskTime: "loading.." }</p>
+
+                <p>{currentTask ? Math.floor(taskTime/1440):"loading.." }</p>"дней"
+
                 <button className='btn primary' onClick={showTimeForm}>Сделать запись о работе</button>
             </div>
             <div className="taskPage-info">

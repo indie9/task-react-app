@@ -1,0 +1,35 @@
+.login_window{
+    width: 288px;
+    height: 300px;
+    background: #FFFFFF;
+    box-shadow: 0px 0px 5px 3px #B5B5B5;
+    border-radius: 5px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 0 30px;
+    & p{
+        font-weight: 300;
+        font-size: 24px;
+        margin: 30px 0;
+        text-align: center;
+    }
+    & .title{
+        color: var(--label-text);
+        text-align: left;
+        margin: 0;
+    }
+    & input{
+        box-sizing: border-box;
+        padding: 5px 10px;
+        height: 24px;
+        background: #FFFFFF;
+        border: 1px solid var(--primary);
+        box-shadow: inset 0px 0px 2px 1px #B5B5B5;
+        border-radius: 3px;
+        margin: 5px 0 30px 0;
+    }
+    & button{
+        margin: 0 0 30px 0;
+    }
+}

@@ -10,7 +10,6 @@ import { userpofile } from '../../store';
 import { users } from '../../store';
 
 const Login = observer(() => {
-
   const LoginSend = (evt) => {
     evt.preventDefault();
     users.getLogin(form)
@@ -27,16 +26,19 @@ const Login = observer(() => {
   
   return (
     <>
-      <Header />
+      <Header mode={"login"}/>
       <section className="main__wrapper">
-        <section className='board'>
-          <form onSubmit={LoginSend}>
-            <input type="text" placeholder='Login' value={form.login} name="login" onChange={handleForm} />
-            <input type="password" placeholder='Password' value={form.password} name="password" onChange={handleForm} />
+        
+          <form onSubmit={LoginSend} className="login_window" >
+            <p>Авторизация</p>
+            <label for="login" className='title'>Логин</label>
+            <input type="text" placeholder='Логин' value={form.login} name="login" onChange={handleForm} />
+            <label for="password" className='title'>Пароль</label>
+            <input type="password" placeholder='Пароль' value={form.password} name="password" onChange={handleForm} />
             <button className='btn success' type='submit'>Вход</button>
           </form>
          
-        </section>
+    
 
       </section>
     </>

@@ -13,7 +13,7 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
   let multisel = document.getElementById(`multiselect-${type}`);
     if (checkbox.style.display == "none"){
       multisel.classList.toggle('active-checkbox');
-      checkbox.style.display = "block"
+      checkbox.style.display = "flex"
     } else {
       multisel.classList.toggle('active-checkbox');
       checkbox.style.display = "none";
@@ -31,41 +31,56 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
     setSearchForm({...searchForm, [type]: searchForm[type].filter(item => item != evt.target.value) })
   }
 
+  const typeEn = {
+    "type": "Тип",
+    "assignedUsers" : "Польователи",
+    "status": "Статус",
+    "rank": "Приоритет"
+  }
+
   return (
       <div className="multiselect" id={`multiselect-${type}`}>
-        <div className="selectBox" onClick={showCheckboxes}>
+        <div className="multiselect-selectBox" onClick={showCheckboxes}>
           <select>
-            <option>{count === 0 ? `${type}`: `${count} выбрано`}</option>
+            <option>{count === 0 ? `${typeEn[type]}`: `${count} выбрано`}</option>
           </select>
-          <div className="overSelect"></div>
+          <div className="multiselect-overSelect"></div>
         </div>
         <div id={`checkboxes${type}`} className="checkboxes" style={{display: "none"}}>
             {type === "assignedUsers"
             ?
             Object.entries(values).map((item) => (
-              <label for={item}>
+              <div className="checkbox">
                 <input
-                type="checkbox"
-                id={item[0]}
-                name={type}
-                value={item[0]}
-                onChange={preFilter}
-                />
-                {item[1]}
-              </label>
+                  className="custom-checkbox"
+                  type="checkbox"
+                  id={item[0]}
+                  name={type}
+                  value={item[0]}
+                  onChange={preFilter}
+                  />
+                  
+                <label for={item[0]}>
+                  {item[1]}
+                </label>
+              </div>
             ))
             :
             values.map((item) => (
-              <label for={item}>
+              <div className="checkbox">
                 <input
+                className="custom-checkbox"
                 type="checkbox"
                 id={item}
                 name={type}
                 value={item}
                 onChange={preFilter}
                 />
-                {item}
-              </label>
+                
+                <label for={item}>
+                  {item}
+                </label>
+              </div>
             ))
             }
         </div>

@@ -14,11 +14,8 @@ const Title = observer( ({mode}) =>{
     form.requestSubmit();
   };
 
-  const removeTask = () => {
-    tasks.removeTask(id);
-  }
 
-  const changeStatus =action((evt) => {
+  const changeStatus = action((evt) => {
     tasks.changeStatus(id,evt.target.value)
   })
   const deleteTask =  () =>{

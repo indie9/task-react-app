@@ -7,7 +7,7 @@ import { users } from '../../store';
 import { observer } from 'mobx-react-lite';
 import { tasks } from '../../store';
 
-const Header = observer( () => {
+const Header = observer( ({mode}) => {
   const location = useLocation();
   const [visableID, setVisableID] = useState()
   const setVis = () => {
@@ -33,24 +33,26 @@ const Header = observer( () => {
             <path d="M117.144 20C115.914 20 114.982 19.7443 114.347 19.2328C113.712 18.7037 113.395 17.9541 113.395 16.9841C113.395 16.5608 113.455 16.1023 113.574 15.6085L113.812 14.5767C113.891 14.2769 113.931 13.9506 113.931 13.5979C113.931 12.7513 113.574 12.328 112.859 12.328C112.542 12.328 112.205 12.4074 111.848 12.5661C111.511 12.7249 111.114 12.9718 110.658 13.3069L109.111 19.8413H104.826L109.14 1.85185L113.544 1.32275L111.312 10.6349L117.055 6.61376H120L114.05 10.291C114.347 10.2205 114.674 10.1852 115.031 10.1852C116.102 10.1852 116.916 10.4762 117.471 11.0582C118.026 11.6402 118.304 12.381 118.304 13.2804C118.304 13.6508 118.264 13.9859 118.185 14.2857L117.858 15.6085C117.759 15.9259 117.709 16.2081 117.709 16.455C117.709 17.1076 118.096 17.4339 118.869 17.4339C119.306 17.4339 119.583 17.4074 119.702 17.3545C119.821 17.3016 119.891 17.2751 119.911 17.2751C119.871 17.8571 119.683 18.351 119.345 18.7566C119.028 19.1623 118.651 19.4709 118.215 19.6825C117.798 19.8942 117.441 20 117.144 20Z" fill="black"/>
             </svg>
           </Link>
+
+         {mode !== "login" && 
          <div className="header_wrap-group-lnk">
-            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${location.pathname != AppRoute.USERS && 'lnk-active'} `}> Задачи</Link>
+            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${location.pathname === AppRoute.MAIN && 'lnk-active'} `}> Задачи</Link>
             <Link to={AppRoute.USERS} className={`lnk ${location.pathname === AppRoute.USERS && 'lnk-active'}`}>Пользователи</Link>
           </div>
+          }
+          {mode !== "login" && 
           <div className="header_wrap-profile">
 
               <span className="username">{users.profileData.username}</span>
               <div className="userfoto ">
                   <img className={`profile_foto`} onClick={setVis} src={users.profileData.photoUrl} alt="" width={42} height={42} />
                   <div className={`dropdown-content ${(visableID == true) && "visable"}`} >
-                    <Link to={`/profile/${users.profileData.id}`} >Посмотреть профиль</Link>
-                    <button className='btn default' onClick={logOut} style={{color : "red"}}> Выйти </button>
+                    <Link to={`/profile/${users.profileData.id}`} className='dropdown-content-item' >Посмотреть профиль</Link>
+                    <button className='dropdown-content-item' onClick={logOut} style={{color : "red"}}> Выйти </button>
                   </div>
               </div>
-
-
           </div>
-
+          }
         </section>
       </section>
     )

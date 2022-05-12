@@ -88,7 +88,7 @@ class UsersStore {
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
-      profileData: computed,
+      currentUserData: computed,
     })
 
     onBecomeObserved(this, 'data', this.fetch);
@@ -121,13 +121,13 @@ class UsersStore {
     this.profileData  = response;
   }
   *takeProfile(id){
-    console.log("takeprof",id)
     const response = yield getUser(id);
     this.currentUserData  = response;
   }
   *editUser(form) {
     const response = yield editUser(form);
     this.profileData  = response;
+    yield this.takeUser(this.profileData.id);
   }
 }
 

@@ -4,8 +4,8 @@ import { events } from "./store";
 
 const url = 'http://93.95.97.34/api'
 
-
 const request = async (url, method = 'GET', body) => {
+  console.log("responce",url)
   const response = await fetch(url, {
     method,
     body: JSON.stringify(body),

@@ -9,19 +9,28 @@ import { tasks } from '../../store';
 import { useParams } from 'react-router-dom';
 import Bio from '../../components/bio/bio';
 import { users } from '../../store';
+import { useEffect } from 'react';
+import { action } from "mobx";
 
 const Profile = () => {
   const { id }= useParams();
 
-  if (users.currentUserData.id !== id){
+  /*if (users.currentUserData.id !== id){
     console.log( users.currentUserData)
     users.takeProfile(id)
-  }
+  }*/
+  
   const [form, setForm] = React.useState(
   {
     ...users.currentUserData,
     "password": localStorage.getItem('userPass')
   })
+
+  useEffect(() => {
+    users.takeProfile(id).then(() => setForm({
+      ...users.currentUserData,
+      "password": localStorage.getItem('userPass')}))
+  }, [])
 
   const handleFieldChange = (evt) => {
     const { name, value } = evt.target;
@@ -33,11 +42,11 @@ const Profile = () => {
     modal.classList.add("hidden");
   }
 
-  const profileEdit = (evt) => {
+  const profileEdit = action((evt) => {
     evt.preventDefault();
-    console.log(form);
     users.editUser(form)
-  }
+    cancelModal();
+  });
   return (
     <>
       <Header />
