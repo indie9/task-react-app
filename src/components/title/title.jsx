@@ -33,7 +33,7 @@ const Title = observer( ({mode}) =>{
     return(
         <div className="title">
           <div className="sub-title">
-            {path === AppRoute.MAIN && "Задача" }
+            {path === AppRoute.MAIN && <span className="name"> Задачи </span> }
             {path === AppRoute.TASK && <span className="name"> {title} </span>}
             {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
             {mode === "Profile" && <span className="name"> {profile.username} </span> }
@@ -97,7 +97,7 @@ const Title = observer( ({mode}) =>{
                   Редактировать
                 </Link>
                 <button
-                  className="btn default"
+                  className="btn error"
                   onClick={deleteTask}
                 >
                   Удалить
@@ -142,12 +142,9 @@ const Title = observer( ({mode}) =>{
                   Редактировать
                   </button>
                 }
-
-
             </div>
             }
             </div>
-
     )});
 
 export default Title;

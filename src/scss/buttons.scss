@@ -27,6 +27,7 @@
 .primary{
   background-color: #7B61FF;
   color: white;
+  border: none;
 }
 .primary:hover{
   background-color: #8A73FF;
@@ -49,6 +50,8 @@
 
 .error{
   background-color: #FF6161;
+  color: white;
+  border: none;
 }
 .error:hover{
   background-color: #FF8080;

@@ -2,6 +2,9 @@ import React, { useState } from "react"
 import { observer } from "mobx-react-lite"
 import { tasks } from "../../store";
 import { users } from "../../store";
+import { typeEn } from "../../const";
+import { dropContent } from "../../const";
+
 const Dropdown = ({type,values,searchForm,setSearchForm}) => {
 
   //колличество выбраных пунктов
@@ -31,12 +34,7 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
     setSearchForm({...searchForm, [type]: searchForm[type].filter(item => item != evt.target.value) })
   }
 
-  const typeEn = {
-    "type": "Тип",
-    "assignedUsers" : "Польователи",
-    "status": "Статус",
-    "rank": "Приоритет"
-  }
+  
 
   return (
       <div className="multiselect" id={`multiselect-${type}`}>
@@ -78,7 +76,7 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
                 />
                 
                 <label for={item}>
-                  {item}
+                  {dropContent[item]}
                 </label>
               </div>
             ))

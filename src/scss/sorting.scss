@@ -29,7 +29,19 @@
     box-shadow: inset 0px 0px 2px 1px #B5B5B5;
     border-radius: 3px;
     height: 24px;
+    color: var(--teaxt-color);
   }
+  & .sort-name::placeholder {
+    color: var(--label-text);
+  }
+
+  & .sort-name:hover{
+    border: 1px solid #7B61FF;
+  }
+  & .sort-name:focus{
+    box-shadow: 0px 0px 2px 2px rgba(123, 97, 255, 0.5);
+  }
+
   & .sort-autor{
     width: 15%;
 

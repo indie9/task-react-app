@@ -9,8 +9,6 @@ import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
 
-  
-  console.log(tasks.pagination.total)
   return (
     <>
       <Header />

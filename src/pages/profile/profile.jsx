@@ -11,26 +11,24 @@ import Bio from '../../components/bio/bio';
 import { users } from '../../store';
 import { useEffect } from 'react';
 import { action } from "mobx";
+import * as _ from 'lodash';
 
 const Profile = () => {
-  const { id }= useParams();
 
+  const { id }= useParams();
   /*if (users.currentUserData.id !== id){
     console.log( users.currentUserData)
     users.takeProfile(id)
   }*/
-  
   const [form, setForm] = React.useState(
   {
     ...users.currentUserData,
-    "password": localStorage.getItem('userPass')
   })
 
-  useEffect(() => {
-    users.takeProfile(id).then(() => setForm({
-      ...users.currentUserData,
-      "password": localStorage.getItem('userPass')}))
-  }, [])
+  if (users.currentUserData.id !== id){
+    users.takeProfile(id)
+    .then(() => setForm({...users.currentUserData}));
+  }
 
   const handleFieldChange = (evt) => {
     const { name, value } = evt.target;
@@ -44,7 +42,7 @@ const Profile = () => {
 
   const profileEdit = action((evt) => {
     evt.preventDefault();
-    users.editUser(form)
+    users.editUser({...form,"password": localStorage.getItem('userPass')})
     cancelModal();
   });
   return (

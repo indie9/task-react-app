@@ -48,7 +48,7 @@ const Header = observer( ({mode}) => {
                   <img className={`profile_foto`} onClick={setVis} src={users.profileData.photoUrl} alt="" width={42} height={42} />
                   <div className={`dropdown-content ${(visableID == true) && "visable"}`} >
                     <Link to={`/profile/${users.profileData.id}`} className='dropdown-content-item' >Посмотреть профиль</Link>
-                    <button className='dropdown-content-item' onClick={logOut} style={{color : "red"}}> Выйти </button>
+                    <button className='dropdown-content-item' onClick={logOut} style={{color : "#FF6161"}}> Выйти </button>
                   </div>
               </div>
           </div>

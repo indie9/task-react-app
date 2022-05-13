@@ -100,7 +100,7 @@
         position: absolute;
         left: -115px;
         top:  35px;
-        padding: 0 5px;
+        overflow: hidden;
         width: 120px;
         z-index: 1;
         background-color: white;
@@ -108,16 +108,21 @@
         border-radius: 5px;
         font-size: 12px;
         line-height: 14px;
-        &  a {
-          color: black;
+        &-item {
+          color: var(--text-color);
           font-size: 12px;
-          margin: 2px 5px;
+          padding: 0 5px;
+          background-color: white;
           text-decoration: none;
+          text-align: left;
           display: block;
+          font-size: 12px;
+          line-height: 20px;
+          width: 100%;
         }
         
-        &  a:hover {background-color: #E6E1FF}
-        &  a:active {
+        &-item:hover {background-color: #E6E1FF}
+        &-item:active {
           color: white;
           background-color: #7B61FF}
       }

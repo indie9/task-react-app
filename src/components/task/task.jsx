@@ -17,11 +17,12 @@ const Task = observer( ({event,userList}) => {
   const location =  useLocation()
 
   const changeStatus = (evt) => {
-
-    tasks.changeStatus(id,evt.target.value)
+    tasks.changeStatus(id,evt.target.value);
+    setVisableID(false);
   }
   const deleteTask =  () =>{
     tasks.deleteTask(id);
+    setVisableID(false);
   }
 
   useEffect(() => {
@@ -76,23 +77,23 @@ const Task = observer( ({event,userList}) => {
                     <Link
                       to={`/form/${id}`}
                       type="text"
-                      className=""
+                      className="dropdown-content-item"
                       >
                         Редактировать
                     </Link>
 
 
                     <button
-                      className="btn default"
+                      className="dropdown-content-item"
                       onClick={deleteTask}
-
+                      style={{color : "#FF6161"}}
                       >
                         Удалить
                     </button>
 
                     {(status === "opened") &&
                         <button
-                        className="btn default"
+                        className="dropdown-content-item"
                         onClick={changeStatus}
                         value={"inProgress"}
                         >
@@ -101,7 +102,7 @@ const Task = observer( ({event,userList}) => {
                     }
                     {(status === "inProgress" || status === "testing" || status === "complete") &&
                         <button
-                        className=""
+                        className="dropdown-content-item"
                         onClick={changeStatus}
                         value={"opened"}
                         >
@@ -110,7 +111,7 @@ const Task = observer( ({event,userList}) => {
                     }
                     {(status === "inProgress") &&
                         <button
-                        className=""
+                        className="dropdown-content-item"
                         onClick={changeStatus}
                         value={"testing"}
                         >
@@ -119,7 +120,7 @@ const Task = observer( ({event,userList}) => {
                     }
                     {(status === "inProgress" || status === "testing") &&
                         <button
-                        className=""
+                        className="dropdown-content-item"
                         onClick={changeStatus}
                         value={"complete"}
                         >

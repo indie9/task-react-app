@@ -7,7 +7,8 @@ import { tasks } from '../../store';
 import { users } from '../../store';
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { observer } from 'mobx-react-lite';
-
+import moment from "moment";
+import "moment/locale/ru";
 
 const TaskPage =observer( () => {
 
@@ -52,9 +53,6 @@ const TaskPage =observer( () => {
 
   }
 
-
-
-
   const [timeForm,setTimeForm] = useState({
     timeInMinutes: 0,
     unit:1,
@@ -76,7 +74,6 @@ const TaskPage =observer( () => {
       default:
         break;
     }
-
   }
   const showTimeForm = () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
@@ -91,7 +88,7 @@ const TaskPage =observer( () => {
     }).then(() => tasks.getTask(id))
     setTimeForm({
       timeInMinutes: 0,
-      unit:1,
+      unit: timeForm.unit,
       comment: "",
       currentUser: users.profileData.id
     });
@@ -103,6 +100,23 @@ const TaskPage =observer( () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
     modal.classList.add("hidden");
   }
+
+  const getNoun = (number, one, two, five) => {
+    let n = Math.abs(number);
+    n %= 100;
+    if (n >= 5 && n <= 20) {
+      return number + five;
+    }
+    n %= 10;
+    if (n === 1) {
+      return number + one;
+    }
+    if (n >= 2 && n <= 4) {
+      return number + two;
+    }
+    return number + five;
+  }
+
   return (
     <>
       <Header />
@@ -127,27 +141,52 @@ const TaskPage =observer( () => {
                 <p>{currentTask ? currentTask.rank: "loading.." }</p>
 
                 <p className='taskPage-title'>Дата начала</p>
-                <p>{currentTask ? currentTask.dateOfCreation: "loading.." }</p>
+                <p>{currentTask ? moment(currentTask.dateOfCreation).format('DD.MM.YYYY h:mm') : "loading.." }</p>
 
                 <p className='taskPage-title'>Дата изменения</p>
-                <p>{currentTask ? currentTask.dateOfUpdate: "loading.." }</p>
+                <p>{currentTask ? moment(currentTask.dateOfUpdate).format('DD.MM.YYYY h:mm') : "loading.." }</p>
 
                 <p className='taskPage-title'>Затрачено времени</p>
 
-                <p>{currentTask ? Math.floor(taskTime/1440):"loading.." }</p>"дней"
+                <p> 
+
+                  {currentTask ? 
+                  Math.floor((taskTime/1440))
+                   ? getNoun(Math.floor(taskTime/1440)," День "," Дня "," Дней ") 
+                   : "" 
+                  :"loading.." }
+
+                  {currentTask ? 
+                  Math.floor((taskTime%1440)/60)
+                   ? getNoun(Math.floor((taskTime%1440)/60)," Час "," Часа "," Часов ")
+                    : "" 
+                  :"loading.." }
+                  
+                  {currentTask ? 
+                  Math.floor(taskTime%60)
+                   ? getNoun(Math.floor(taskTime%60)," Минута "," Минуты "," Минут ")
+                   : "" 
+                  :"loading.." }
+                   
+                </p>
 
                 <button className='btn primary' onClick={showTimeForm}>Сделать запись о работе</button>
+           
             </div>
+
             <div className="taskPage-info">
                 <p className='taskPage-title'>Описание</p>
                 <p>{currentTask.description}</p>
             </div>
+
             <form className="taskPage-comments" onSubmit={postComment}>
-                <p className='taskPage-title'>Коментарий</p>
+                <p className='taskPage-title'>Коментарии {'('}{comments.length}{')'} {}</p>
                 <textarea
                 className='taskPage-textArea'
                 value={comment.text}
                 onChange={handleComment}
+                placeholder={"Текст комментария"}
+                required
                 />
                 <button type="submit" className='btn success'> Добавить комментарий</button>
                 {comments[0]
