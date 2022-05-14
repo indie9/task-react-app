@@ -1,26 +1,30 @@
-import React, { useState } from "react"
-import { observer } from "mobx-react-lite"
+import React, { useState } from 'react';
+import { observer } from "mobx-react-lite";
 import { tasks } from "../../store";
-import { users } from "../../store";
 import { typeEn } from "../../const";
 import { dropContent } from "../../const";
 
-const Dropdown = ({type,values,searchForm,setSearchForm}) => {
+const Dropdown =observer( ({type,values,searchForm,setSearchForm}) => {
 
   //колличество выбраных пунктов
   const [count,setCount] = useState(0);
-
+  if (tasks.preFiltredData.hasOwnProperty(type)){
+    if (tasks.preFiltredData[type].length !== count){
+      setCount(tasks.preFiltredData[type].length)
+    }
+  }
   //скрываем/показываем чекбокс
   const showCheckboxes = () => {
   let checkbox = document.getElementById(`checkboxes${type}`);
   let multisel = document.getElementById(`multiselect-${type}`);
-    if (checkbox.style.display == "none"){
-      multisel.classList.toggle('active-checkbox');
-      checkbox.style.display = "flex"
-    } else {
-      multisel.classList.toggle('active-checkbox');
-      checkbox.style.display = "none";
-    }
+
+  if (checkbox.style.display === "none"){
+    multisel.classList.toggle('active-checkbox');
+    checkbox.style.display = "flex"
+  } else {
+    multisel.classList.toggle('active-checkbox');
+    checkbox.style.display = "none";
+  }
   }
 
   //заполняем/редактируем форму сортировки
@@ -34,8 +38,6 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
     setSearchForm({...searchForm, [type]: searchForm[type].filter(item => item != evt.target.value) })
   }
 
-  
-
   return (
       <div className="multiselect" id={`multiselect-${type}`}>
         <div className="multiselect-selectBox" onClick={showCheckboxes}>
@@ -45,10 +47,13 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
           <div className="multiselect-overSelect"></div>
         </div>
         <div id={`checkboxes${type}`} className="checkboxes" style={{display: "none"}}>
+
+            {/* Немного меняем логику для дропдауна с пользователями */}
+
             {type === "assignedUsers"
             ?
             Object.entries(values).map((item) => (
-              <div className="checkbox">
+              <div className="checkbox" key={item[0]}>
                 <input
                   className="custom-checkbox"
                   type="checkbox"
@@ -57,15 +62,15 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
                   value={item[0]}
                   onChange={preFilter}
                   />
-                  
-                <label for={item[0]}>
+
+                <label htmlFor={item[0]}>
                   {item[1]}
                 </label>
               </div>
             ))
             :
             values.map((item) => (
-              <div className="checkbox">
+              <div className="checkbox" key={item}>
                 <input
                 className="custom-checkbox"
                 type="checkbox"
@@ -74,8 +79,8 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
                 value={item}
                 onChange={preFilter}
                 />
-                
-                <label for={item}>
+
+                <label htmlFor={item}>
                   {dropContent[item]}
                 </label>
               </div>
@@ -84,6 +89,6 @@ const Dropdown = ({type,values,searchForm,setSearchForm}) => {
         </div>
       </div>
   );
-};
+});
 
 export default Dropdown;

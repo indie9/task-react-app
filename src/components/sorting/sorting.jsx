@@ -1,38 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import { tasks } from "../../store/index";
+import { tasks, users } from "../../store/index";
 import { action } from "mobx"
 import Dropdown from "../dropdown/dropdown";
-import { users } from "../../store/index"
+
 
 const Sorting = observer( () =>{
-
+  //форма для отправки на сортировку
   const [form,setForm] = useState({type:[],query: "" , assignedUsers:[],status:[],rank:[]});
-  const handlChange = (ev) => {
-    setForm({...form, query: ev.target.value})}
-    const [userList,setUserList] = useState({});
+  //заполняем форму
+  const handlChange = (ev) => {setForm({...form, query: ev.target.value})}
+  //список всех пользователей
+  const [userList,setUserList] = useState({});
+  useEffect(() => {
+    if ( !userList[0]){
+      users.allUsersFetch().then(() => setUserList(users.allUsers));
+    }
+  })
 
-    useEffect(() => {
-      users.allUsersFetch().then(() => setUserList(users.allUsers))
-    })
+  //отправляем форму
   const subm = action((evt) => {
     evt.preventDefault();
+    //прячем чекбоксы
     let mults = document.getElementsByClassName("multiselect");
     let boxes = document.getElementsByClassName("checkboxes");
     for( let i = 0; i < boxes.length; i++){
       boxes[i].style.display = "none";
       mults[i].classList.remove("active-checkbox")
     }
-    //document.getElementsByClassName('sorting_list')[0].reset();
+    //фильтруем
     tasks.filterOn(form);
-
   })
 
+  //скидываем форму
+  const resetForm = action((evt) => {
+    evt.preventDefault();
+
+    let mults = document.getElementsByClassName("multiselect");
+    let boxes = document.getElementsByClassName("checkboxes");
+    for( let i = 0; i < boxes.length; i++){
+      boxes[i].style.display = "none";
+      mults[i].classList.remove("active-checkbox")
+    }
+    //обновляем поля формы
+    tasks.filterOn({type:[],query: "" , assignedUsers:[],status:[],rank:[]});
+    setForm( {type:[],query: "" , assignedUsers:[],status:[],rank:[]} )
+
+    document.getElementsByClassName('sorting_list')[0].reset();
+
+    //чекбоксы ставим в положение выключено
+    const customCheckboxes = document.getElementsByClassName('custom-checkbox');
+     for (let i = 0; i < customCheckboxes.length; i ++){
+       customCheckboxes[i].checked = false;
+     }
+  })
 
     return(
-          <form className="sorting_list" onSubmit={subm}>
+          <form className="sorting_list" onSubmit={subm} onReset={resetForm} >
 
-            <div class="sorting_item sort-type">
+            <div className="sorting_item sort-type">
                <Dropdown type={"type"} values={["task","bug"]} searchForm={form} setSearchForm={setForm} />
             </div>
 
@@ -44,7 +70,7 @@ const Sorting = observer( () =>{
               value = {form.query}
             />
 
-            <div class="sorting_item sort-autor">
+            <div className="sorting_item sort-autor">
             <Dropdown type={"assignedUsers"} values={userList} searchForm={form} setSearchForm={setForm}/>
             </div>
 
@@ -57,6 +83,7 @@ const Sorting = observer( () =>{
             </div>
 
             <button className="btn primary sort-btn"  type="submit"> Применить </button>
+            <button className="btn error sort-btn-rest"  type="reset"> &#8635; </button>
           </form>
 
     )});

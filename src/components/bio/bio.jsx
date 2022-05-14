@@ -1,22 +1,14 @@
 import React from "react";
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-
-import { tasks } from '../../store';
-import { users } from "../../store";
-
+import { useState, useEffect } from "react";
+import { tasks, users } from '../../store';
 import { observer } from "mobx-react-lite";
-
 import TaskBoard from "../taskBoard/taskBoard";
 
 
-const Bio = observer( () =>{
+const Bio = observer( ({currentTaskList}) =>{
+    //данные текущего профиля
+    const profile = {...users.currentUserData};
 
-      const profile = {...users.currentUserData};
-      
-      if (!(JSON.stringify(tasks.preFiltredData) === JSON.stringify({"assignedUsers":[ profile.id] }))){
-        tasks.filterOn({"assignedUsers":[ profile.id] });
-      }
-    
     return (
         <section className="board__profile" >
             <article className="board__profile-bio" >
@@ -31,7 +23,7 @@ const Bio = observer( () =>{
             </article>
             <article className="board__profile-tasks" >
                 <p className="title"> Задачи </p>
-                <TaskBoard taskList={tasks.filtredData} />
+                <TaskBoard taskList={currentTaskList} />
             </article>
         </section>
     )});

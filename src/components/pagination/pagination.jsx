@@ -1,31 +1,30 @@
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
-import React, { useState } from "react";
-
+import React from "react";
 import { action } from 'mobx';
-import { Link } from "react-router-dom";
-import moment from "moment";
 import "moment/locale/ru";
 
 
 const Pagination = ({item}) => {
+  //длина всего списка
   const totalLength = item.pagination.total;
+  //номер страници
   const page = item.pagination.page;
-  const startPage = () => {
+  //меняем страницу
+  const startPage = action(() => {
     item.pagination.page = 0;
     item.fetch();
-  }
-  const prevPage = () => {
+  })
+  const prevPage = action(() => {
     item.pagination.page -= 1;
     item.fetch();
-  }
+  })
   const nextPage = action(() => {
     item.pagination.page += 1;
     item.fetch();
   })
-  const endPage = () => {
+  const endPage = action(() => {
     item.pagination.page = (totalLength%8 == 0?  Math.floor(totalLength/8) - 1 :  Math.floor(totalLength/8) );
     item.fetch();
-  }
+  })
   return (
     <div className="pag_buttons">
 
@@ -54,6 +53,10 @@ const Pagination = ({item}) => {
       onClick={endPage}
       disabled={Math.floor(totalLength / 8) < page+1 || totalLength-(page+1)*8 == 0}
     > {'Конец'} </button>
+
+
+    <span className="pagination-info"> Показано {page*8+1}-{(page*8+8)>totalLength ? totalLength : (page*8+8) } из {totalLength} </span>
+
   </div>
 
 

@@ -14,7 +14,7 @@
     flex-direction: row;
     align-items: center;
     margin:0 -7px;
-  
+
     &-item{
       margin: 0 7px;
       box-sizing: border-box;
@@ -73,14 +73,14 @@
     .task_btn{
       width: 10%;
       display: flex;
-      justify-content: flex-end;
+      justify-content: center;
       align-items: center;
       cursor: pointer;
       & .dropdown {
         position: relative;
         display: inline-block;
       }
-      
+
       & .dropdown-btn{
         color: var(--primary);
         font-weight: 600;
@@ -94,12 +94,12 @@
         background-color: var(--primary);
         color: white;
       }
-      
+
       & .dropdown-content {
         display: none;
         position: absolute;
-        left: -115px;
-        top:  35px;
+        left: -100px;
+        top:  22px;
         overflow: hidden;
         width: 120px;
         z-index: 1;
@@ -120,7 +120,7 @@
           line-height: 20px;
           width: 100%;
         }
-        
+
         &-item:hover {background-color: #E6E1FF}
         &-item:active {
           color: white;

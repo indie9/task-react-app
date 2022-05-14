@@ -67,8 +67,14 @@
 .pag_buttons{
   display: flex;
   flex-direction: row;
-  width: 11vw;
+
   margin-top: 20px;
-  justify-content: space-between;
+  justify-content: flex-start;
+  width: 100%;
+  & .pagination-info{
+    margin-left: auto;
+    font-size: 14px;
+    color: var(--label-text);
+  }
 }
 

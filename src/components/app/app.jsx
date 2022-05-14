@@ -6,16 +6,15 @@ import Login from '../../pages/login/login';
 import { Switch, BrowserRouter, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { observer } from 'mobx-react-lite';
-import Header from '../header/header';
-import { tasks } from '../../store';
 import Form from '../../pages/form/form';
 import TaskPage from '../../pages/taskpage/taskpage';
-import '../../scss/root.scss'
 import Users from '../../pages/users/users';
 import { users } from '../../store';
+import '../../scss/root.scss'
+
 
 const App = observer(() => {
-
+  //запоминаем текущего пользователя
   const loginFlag = localStorage.getItem('userId');
   if (loginFlag){
     users.takeUser(loginFlag)

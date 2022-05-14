@@ -1,23 +1,23 @@
 import React, { useEffect,useState } from "react";
 import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
-import moment from "moment";
 import { tasks, users } from '../../store';
-import { AppRoute } from "../../const"
-import { useHistory } from "react-router-dom";
 import { observer } from "mobx-react-lite";
-import Dropdown from "../dropdown/dropdown";
+
 
 const Event = observer( () =>{
-
+      //ид задачи
       const { id } = useParams();
-
+      //список всех пользователей
       const [userList,setUserList] = useState({});
 
+      //если список пустой - заполняем
       useEffect(() => {
-        users.allUsersFetch().then(() => setUserList(users.allUsers))
+        if ( !userList[0]){
+          users.allUsersFetch().then(() => setUserList(users.allUsers))
+        }
       })
 
-
+      //форма редактирования
       const [form, setForm] = React.useState(
         id
         ?
@@ -34,23 +34,26 @@ const Event = observer( () =>{
           title: "",
           type: "",
           userId: users.profileData.id
-      }
-      )
+      })
+
+      //в случае если форма редактируется заполняем поля формы значениями текущей задачи
       if (!form.id && id){
         tasks.getTask(id).then(() => setForm({...tasks.currentTask}) )
       }
-
+      //заполняем форму
       const handleFieldChange = (evt) => {
         const { name, value } = evt.target;
         setForm({ ...form, [name]: value})
       }
 
+      //отправляем запрос на изменение задачи и переходим на главную
       const handleToEdit = (evt) => {
-        console.log("edit");
         evt.preventDefault();
         tasks.addTask(form)
         .then(() => window.location.href = '/')
       }
+
+      //отправляем запрос на добавление задачи и переходим на главную
       const addEvent = (evt) => {
         console.log("add");
         evt.preventDefault();
@@ -68,10 +71,10 @@ const Event = observer( () =>{
 
                   <select name="assignedId" onChange={handleFieldChange}>
                     <option disabled selected>Исполнитель</option>
-                    {Object.keys(userList).map(item => <option selected={item === form.assignedId} value={item}> {userList[item]}  </option>)}
+                    {Object.keys(userList).map(item => <option selected={item === form.assignedId} value={item} key={item} > {userList[item]}  </option>)}
                   </select>
 
-                  <label for="type" className='taskPage-title'>Тип</label>
+                  <label htmlFor="type" className='taskPage-title'>Тип</label>
 
                   <select name="type" onChange={handleFieldChange}>
                     <option disabled selected>Тип</option>
@@ -80,7 +83,7 @@ const Event = observer( () =>{
                   </select>
 
 
-                  <label for="rank" className='taskPage-title'>Приоритет</label>
+                  <label htmlFor="rank" className='taskPage-title'>Приоритет</label>
 
                   <select name="rank" onChange={handleFieldChange}>
                     <option disabled selected>Приоритет</option>
@@ -93,7 +96,7 @@ const Event = observer( () =>{
 
             </div>
             <div className="board__form-info">
-                  <label for="title" className='taskPage-title'>Название</label>
+                  <label htmlFor="title" className='taskPage-title'>Название</label>
                   <input
                     type="text"
                     className="board__input board__input--theme"
@@ -102,7 +105,7 @@ const Event = observer( () =>{
                     value={form.title}
                     required
                   />
-                  <label for="description" className='taskPage-title'>Задача</label>
+                  <label htmlFor="description" className='taskPage-title'>Задача</label>
                   <textarea
                     type="text"
                     className="board__input board__input--theme"

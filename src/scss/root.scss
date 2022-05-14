@@ -13,8 +13,11 @@
 @use './profile.scss';
 @use './modal_window.scss';
 @use './login.scss';
+@use './unfound.scss';
 html,
 body {
+  font-family: 'Roboto';
+  font-style: normal;
   height: 100%;
   overflow-x: hidden;
   font-size: 16px;

@@ -9,39 +9,50 @@ import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
 import { observer } from 'mobx-react-lite';
 import moment from "moment";
 import "moment/locale/ru";
+import { dropContent } from '../../const.js';
+import { action } from "mobx";
 
 const TaskPage =observer( () => {
 
   const {id} = useParams();
-  const [usersList,setUsersList] = useState({...users.usersList});
-  const [currentTask,setCurrentTask] = useState({...tasks.currentTask});
-  const [comment,setComment] = useState("");
-  const comments = [...tasks.currentComments];
-  const taskTime = tasks.currentTask.timeInMinutes;
-
-  if (!currentTask.id ){
-    tasks.getTask(id).then(() => setCurrentTask({...tasks.currentTask}));
-  }
-  if (!usersList[users.profileData.id] ){
-    users.fetch().then(() => setUsersList({...users.usersList}));
-  }
+  //состояния хранят текущую задачу и коменты к ней
   const [userList,setUserList] = useState({});
+  const [currentTask,setCurrentTask] = useState({...tasks.currentTask});
+  const [comments,setComments] = useState([...tasks.currentComments]);
+  //форма с коментом(новым)
+  const [comment,setComment] = useState("");
 
+  const taskTime = tasks.currentTask.timeInMinutes;
+  //проверяем нужная ли задача отображается
   useEffect(() => {
-    users.allUsersFetch().then(() => setUserList(users.allUsers))
+    if (currentTask.id !== id){
+      tasks.getTask(id).then(() => {
+        setCurrentTask({...tasks.currentTask})
+        setComments([...tasks.currentComments])
+      });
+    }
   })
-
-
+  //получем пользователй
+  useEffect(() => {
+    if ( !userList[0]){
+      users.allUsersFetch().then(() => setUserList(users.allUsers))
+    }
+  })
+  //стандартные операции с коментами
   const handleComment = (evt) => {
     setComment(evt.target.value)
   }
-  const commentDelete = (evt) => {
-    tasks.removeComment(evt.target.value);
-    tasks.getTask(id)
-  }
+  const commentDelete =action( (evt) => {
+    tasks.removeComment(evt.target.value).then(() => {
+      tasks.getTask(id).then(() => {
+        console.log('getttt tasky',tasks.currentComments);
+        setComments([...tasks.currentComments])
+      });
+    })
+
+  })
   const postComment = (evt) => {
     evt.preventDefault();
-    console.log(comment)
     tasks.addComment({
       taskId: currentTask.id,
       userId: users.profileData.id,
@@ -49,10 +60,10 @@ const TaskPage =observer( () => {
     })
     evt.target.reset();
     setComment("");
-    tasks.getTask(id);
+    tasks.getTask(id).then(() => setComments([...tasks.currentComments]))
 
   }
-
+  //работаем с формой добавления времени
   const [timeForm,setTimeForm] = useState({
     timeInMinutes: 0,
     unit:1,
@@ -75,17 +86,19 @@ const TaskPage =observer( () => {
         break;
     }
   }
-  const showTimeForm = () => {
-    const modal = document.getElementsByClassName("edit_profile_modal")[0];
-    modal.classList.remove("hidden");
-  }
+
   const editTime = (evt) => {
     evt.preventDefault();
     tasks.addTime(id,{
       "timeInMinutes": timeForm.timeInMinutes * timeForm.unit,
       "comment": timeForm.comment,
       "currentUser": users.profileData.id
-    }).then(() => tasks.getTask(id))
+    }).then(() => {
+      tasks.getTask(id).then(() => {
+
+        setComments([...tasks.currentComments])
+      });
+    })
     setTimeForm({
       timeInMinutes: 0,
       unit: timeForm.unit,
@@ -96,11 +109,16 @@ const TaskPage =observer( () => {
     modal.classList.add("hidden");
 
   }
+  //показываем / прячем модалку
+  const showTimeForm = () => {
+    const modal = document.getElementsByClassName("edit_profile_modal")[0];
+    modal.classList.remove("hidden");
+  }
   const cancelModal = () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
     modal.classList.add("hidden");
   }
-
+  //отображаем время в нужном склонении
   const getNoun = (number, one, two, five) => {
     let n = Math.abs(number);
     n %= 100;
@@ -135,10 +153,10 @@ const TaskPage =observer( () => {
                 <p>{currentTask ? userList[currentTask.userId]: "loading.." }</p>
 
                 <p className='taskPage-title'>Тип запроса</p>
-                <p>{currentTask ? currentTask.type: "loading.." }</p>
+                <p>{currentTask ? dropContent[currentTask.type]: "loading.." }</p>
 
                 <p className='taskPage-title'>Приоритет</p>
-                <p>{currentTask ? currentTask.rank: "loading.." }</p>
+                <p>{currentTask ? dropContent[currentTask.rank]: "loading.." }</p>
 
                 <p className='taskPage-title'>Дата начала</p>
                 <p>{currentTask ? moment(currentTask.dateOfCreation).format('DD.MM.YYYY h:mm') : "loading.." }</p>
@@ -148,30 +166,30 @@ const TaskPage =observer( () => {
 
                 <p className='taskPage-title'>Затрачено времени</p>
 
-                <p> 
-
-                  {currentTask ? 
+                <p>
+                  {!taskTime && "Пока-что нет учтенного времени " }
+                  {currentTask ?
                   Math.floor((taskTime/1440))
-                   ? getNoun(Math.floor(taskTime/1440)," День "," Дня "," Дней ") 
-                   : "" 
+                   ? getNoun(Math.floor(taskTime/1440)," День "," Дня "," Дней ")
+                   : ""
                   :"loading.." }
 
-                  {currentTask ? 
+                  {currentTask ?
                   Math.floor((taskTime%1440)/60)
                    ? getNoun(Math.floor((taskTime%1440)/60)," Час "," Часа "," Часов ")
-                    : "" 
+                    : ""
                   :"loading.." }
-                  
-                  {currentTask ? 
+
+                  {currentTask ?
                   Math.floor(taskTime%60)
                    ? getNoun(Math.floor(taskTime%60)," Минута "," Минуты "," Минут ")
-                   : "" 
+                   : ""
                   :"loading.." }
-                   
+
                 </p>
 
                 <button className='btn primary' onClick={showTimeForm}>Сделать запись о работе</button>
-           
+
             </div>
 
             <div className="taskPage-info">
@@ -193,7 +211,7 @@ const TaskPage =observer( () => {
                 ?
                 <div className="comments-list">
                   {comments.map(item => (
-                    <div className="comment-item">
+                    <div className="comment-item" key={item.id} >
                       <p className='comment-title'>{userList[item.userId]} {item.userId === users.profileData.id && <button type="button" className='btn error' value={item.id} onClick={commentDelete}>Удалить</button>}</p>
                       <p className='comment-body'>{item.text}</p>
                     </div>
@@ -210,13 +228,13 @@ const TaskPage =observer( () => {
         :
         "loading"
         }
-        {/***************************************/}
+        {/*****************модалка**********************/}
         <div className='edit_profile_modal hidden' >
           <div className='modal_board' >
               <div className="modal_board-title"> Запись о работе </div>
               <form  className='modal_board-form' id='modal_form' onSubmit={editTime}>
 
-                <label for="photoUrl" className='taskPage-title'>Затраченое время</label>
+                <label htmlFor="photoUrl" className='taskPage-title'>Затраченое время</label>
                     <input
                       type="number"
                       className="board__input board__input--theme"
@@ -225,19 +243,21 @@ const TaskPage =observer( () => {
                       value={timeForm.timeInMinutes}
                       required
                     />
-                <label for="username" className='taskPage-title'>Единица измерения</label>
+                <label htmlFor="username" className='taskPage-title'>Единица измерения</label>
                     <select
                       className="board__input board__input--theme"
                       name="unit"
                       onChange={handleTimeChange}
                       required
                     >
-                      <option value={1440}>День</option>
+                      <option defaultValue={1}>Минута</option>
                       <option value={60}>Час</option>
-                      <option selected value={1}>Минута</option>
+                      <option value={1440}>День</option>
+
+
                     </select>
 
-                <label for="about" className='taskPage-title'>Коментарий</label>
+                <label htmlFor="about" className='taskPage-title'>Коментарий</label>
                     <textarea
                       type="text"
                       className="board__input board__input--theme"

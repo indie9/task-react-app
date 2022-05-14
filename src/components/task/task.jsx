@@ -1,19 +1,21 @@
-import { keyboard } from "@testing-library/user-event/dist/keyboard";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import moment from "moment";
 import "moment/locale/ru";
 import { useLocation } from "react-router-dom/cjs/react-router-dom.min";
 import { AppRoute } from "../../const";
-import { tasks, users } from "../../store";
+import { tasks } from "../../store";
 import { observer } from "mobx-react-lite";
 
 const Task = observer( ({event,userList}) => {
-  const {id,title,assignedId,type,status,rank,userId} = event;
+  //разворачиваем данные задачи из пропсов
+  const {id,title,assignedId,type,status,rank} = event;
+
+  //скрыть показать дропдаун
   const [visableID, setVisableID] = useState()
   const setVis = () => {
     setVisableID(!visableID);
   }
+
   const location =  useLocation()
 
   const changeStatus = (evt) => {
@@ -24,7 +26,7 @@ const Task = observer( ({event,userList}) => {
     tasks.deleteTask(id);
     setVisableID(false);
   }
-
+  //скрываем дродаун если регистрируем клик вне области
   useEffect(() => {
     const onClick = e => {
       const dropBTN = document.getElementById(id);
@@ -38,7 +40,7 @@ const Task = observer( ({event,userList}) => {
   });
 
   return (
-    <article className="task">
+    <article className="task" key={id}>
 
       <div className="task_inner">
 

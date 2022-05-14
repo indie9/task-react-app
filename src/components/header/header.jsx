@@ -1,23 +1,29 @@
 import React from 'react';
 import { useState } from 'react';
 import { AppRoute } from '../../const';
-import { Link } from 'react-router-dom';
+import { Link,useRouteMatch } from "react-router-dom";
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { users } from '../../store';
 import { observer } from 'mobx-react-lite';
 import { tasks } from '../../store';
 
 const Header = observer( ({mode}) => {
-  const location = useLocation();
-  const [visableID, setVisableID] = useState()
-  const setVis = () => {
-    setVisableID(!visableID);
-  }
 
+  const { path } = useRouteMatch();
+  //скрываем показываем выпадающее меню
+  const setVis = () => {
+   let dropContent = document.getElementById("header-drop-content");
+   dropContent.classList.toggle("visable");
+  }
+  //выход
   const logOut = () => {
     localStorage.clear();
     window.location.reload();
   }
+  //условие для подсвечивания нужной ссылки
+
+  const chek = (path === AppRoute.MAIN) || (path === AppRoute.EDIT_TASK) || (path === AppRoute.TASK)
+
     return (
       <section className="header">
         <section className="header_wrap">
@@ -34,20 +40,20 @@ const Header = observer( ({mode}) => {
             </svg>
           </Link>
 
-         {mode !== "login" && 
+         {mode !== "login" &&
          <div className="header_wrap-group-lnk">
-            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${location.pathname === AppRoute.MAIN && 'lnk-active'} `}> Задачи</Link>
-            <Link to={AppRoute.USERS} className={`lnk ${location.pathname === AppRoute.USERS && 'lnk-active'}`}>Пользователи</Link>
+            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${chek && 'lnk-active'} `}> Задачи</Link>
+            <Link to={AppRoute.USERS} className={`lnk ${!chek && 'lnk-active'}`}>Пользователи</Link>
           </div>
           }
-          {mode !== "login" && 
+          {mode !== "login" &&
           <div className="header_wrap-profile">
 
               <span className="username">{users.profileData.username}</span>
               <div className="userfoto ">
                   <img className={`profile_foto`} onClick={setVis} src={users.profileData.photoUrl} alt="" width={42} height={42} />
-                  <div className={`dropdown-content ${(visableID == true) && "visable"}`} >
-                    <Link to={`/profile/${users.profileData.id}`} className='dropdown-content-item' >Посмотреть профиль</Link>
+                  <div className={`dropdown-content `} id={"header-drop-content"} >
+                    <Link to={`/profile/${users.profileData.id}`} onClick={setVis} className='dropdown-content-item' >Посмотреть профиль</Link>
                     <button className='dropdown-content-item' onClick={logOut} style={{color : "#FF6161"}}> Выйти </button>
                   </div>
               </div>

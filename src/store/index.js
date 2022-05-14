@@ -1,7 +1,5 @@
 import { computed, makeAutoObservable, onBecomeObserved } from "mobx";
 import {  getTasks, getUsers, getAllUsers, userLogin, getUser, addTask,getTask, editUser, getComments,addComment, removeComment, addTime,changeStatus, deleteTask } from "../api";
-import moment from "moment";
-import { eventsMock } from "../mocks";
 
 
 class TasksStore {
@@ -15,9 +13,6 @@ class TasksStore {
     makeAutoObservable(this,{},{
       autoBind: true,
       getTask: computed,
-      currentTask: computed,
-      preFiltredData: computed,
-      //currentComments: computed
     })
     onBecomeObserved(this, 'filtredData', this.fetch);
   }
@@ -42,20 +37,18 @@ class TasksStore {
     this.currentComments = res;
   }
 
+
   *deleteTask(id){
     yield deleteTask(id);
     yield this.fetch();
   }
 
   filterOn(form){
-    console.log("form",form);
     this.preFiltredData = form;
     this.pagination.page = 0;
     this.fetch();
   }
-  removePreFilter(){
-    this.preFiltredData = {type:[],autor:[],status:[],priority:[]};
-  }
+
 
   removeTask (_id){
     this.data = this.data.filter(item => item._id !== _id);
@@ -65,9 +58,10 @@ class TasksStore {
   }
   *removeComment(id){
     yield removeComment(id);
+    const res  = yield getComments(this.currentTask.id);
+    this.currentComments = res;
   }
   *addTime(id,timeData){
-
     yield addTime(id,timeData);
   }
   *changeStatus(id,status){
@@ -97,7 +91,6 @@ class UsersStore {
 
   *fetch() {
     const response = yield getUsers(this.pagination.page);
-    console.log('hitr',response)
     this.data  = response.data;
     this.data.map(item => {this.usersList[item.id] = item.username});
     this.pagination.total = response.total;
@@ -110,7 +103,6 @@ class UsersStore {
   *getLogin(form) {
     const response = yield userLogin(form);
     this.profileData  = response;
-    console.log(this.profileData);
     if (this.profileData.id) {
       localStorage.setItem('userId', this.profileData.id);
       localStorage.setItem('userPass', form.password);

@@ -9,6 +9,7 @@ import { users } from "../../store/index";
 const Title = observer( ({mode}) =>{
   const { path } = useRouteMatch();
   const { id } = useParams();
+  //сабмити форму вне элемента
   const submit = () => {
     const form = document.getElementById("taskFormID");
     form.requestSubmit();
@@ -25,6 +26,7 @@ const Title = observer( ({mode}) =>{
   }
   const status = tasks.currentTask.status;
   const title = tasks.currentTask.title
+  //открываем модалку вне элемента
   const editProfile = () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
     modal.classList.remove("hidden");
@@ -33,10 +35,13 @@ const Title = observer( ({mode}) =>{
     return(
         <div className="title">
           <div className="sub-title">
+            {/*много условного рендеринга*/}
             {path === AppRoute.MAIN && <span className="name"> Задачи </span> }
             {path === AppRoute.TASK && <span className="name"> {title} </span>}
             {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
-            {mode === "Profile" && <span className="name"> {profile.username} </span> }
+            {path === AppRoute.PROFILE && <span className="name"> {profile.username} </span> }
+            {path === AppRoute.EDIT_TASK && (id ? <span className="name"> Редактирование </span> : <span className="name"> Создание  </span>) }
+            {path === AppRoute.USERS && <span className="name"> Пользователи </span>}
           </div>
           {path === AppRoute.MAIN &&
               <div className="buttons">
@@ -123,7 +128,7 @@ const Title = observer( ({mode}) =>{
                 </div>
             }
 
-            {mode === "Profile" &&
+            {path === AppRoute.PROFILE &&
               <div className="buttons">
 
 
