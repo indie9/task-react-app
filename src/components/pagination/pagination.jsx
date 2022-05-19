@@ -1,9 +1,10 @@
 import React from "react";
 import { action } from 'mobx';
+import { tasks } from "../../store";
 import "moment/locale/ru";
+import { observer } from "mobx-react-lite";
 
-
-const Pagination = ({item}) => {
+const Pagination = observer(({item}) => {
   //длина всего списка
   const totalLength = item.pagination.total;
   //номер страници
@@ -12,18 +13,22 @@ const Pagination = ({item}) => {
   const startPage = action(() => {
     item.pagination.page = 0;
     item.fetch();
+    //tasks.fetchAsyncTask2();
   })
   const prevPage = action(() => {
     item.pagination.page -= 1;
     item.fetch();
+    //tasks.fetchAsyncTask2();
   })
   const nextPage = action(() => {
     item.pagination.page += 1;
     item.fetch();
+   // tasks.fetchAsyncTask2();
   })
   const endPage = action(() => {
     item.pagination.page = (totalLength%8 == 0?  Math.floor(totalLength/8) - 1 :  Math.floor(totalLength/8) );
     item.fetch();
+    //tasks.fetchAsyncTask2();
   })
   return (
     <div className="pag_buttons">
@@ -61,6 +66,6 @@ const Pagination = ({item}) => {
 
 
   );
-};
+});
 
 export default Pagination;

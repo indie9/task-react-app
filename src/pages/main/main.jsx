@@ -7,15 +7,19 @@ import { tasks } from '../../store';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
+  //if (!tasks.filtredData[0]){
 
+    //console.log('helllo',tasks.filtredData)
+   
+  
   return (
     <>
-      <Header />
+      <Header /> 
       <section className="main__wrapper">
 
         <Title />
         <section className='board'>
-          <TaskBoard taskList={tasks.filtredData} />
+          <TaskBoard  />
         </section>
 
       </section>

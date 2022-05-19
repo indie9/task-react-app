@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 const Task = observer( ({event,userList}) => {
   //разворачиваем данные задачи из пропсов
   const {id,title,assignedId,type,status,rank} = event;
-
+  console.log(id,title,assignedId,type,status,rank)
   //скрыть показать дропдаун
   const [visableID, setVisableID] = useState()
   const setVis = () => {
@@ -26,8 +26,8 @@ const Task = observer( ({event,userList}) => {
     tasks.deleteTask(id);
     setVisableID(false);
   }
-  //скрываем дродаун если регистрируем клик вне области
-  useEffect(() => {
+  //скрываем дропдаун если регистрируем клик вне области
+   useEffect(() => {
     const onClick = e => {
       const dropBTN = document.getElementById(id);
       const dropContent = document.getElementById(`drop${id}`);

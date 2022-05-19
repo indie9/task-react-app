@@ -29,7 +29,8 @@ const Sorting = observer( () =>{
       mults[i].classList.remove("active-checkbox")
     }
     //фильтруем
-    tasks.filterOn(form);
+    tasks.preFiltredData = form;
+    tasks.fetch();
   })
 
   //скидываем форму

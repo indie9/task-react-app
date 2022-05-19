@@ -18,23 +18,42 @@ const request = async (url, method = 'GET', body) => {
   return await response.json();
 }
 
+
+const axios = require('axios').default;
+const inst = axios.create({
+    baseURL: 'http://93.95.97.34/api'
+})
+
+
+
 export const getTasks = (preFilter,page) => {
-  return request(`${url}/tasks`, 'POST', {
-    "filter": {
-      ...preFilter
-    },
-    "page": page,
-    "limit": 8
-  });
+  return inst.post('/tasks', {
+      filter: {
+        ...preFilter
+      },
+      page: page,
+      limit: 8
+  })
+      .then((res) => {return res.data})
+      .catch((err) => {})
 }
 
+
+
 export const getUsers = (page) => {
-  return request(`${url}/users`, 'POST', {
-    "filter": {},
-    "page": page,
-    "limit": 8
-  });
+  return inst.post('/users', {
+      filter: {},
+      page: page,
+      limit: 8
+  })
+      .then((res) => {
+          return res.data;
+      })
+      .catch((err) => {
+      })
 }
+
+
 export const getAllUsers = () => {
   return request(`${url}/users/all`);
 }
@@ -79,4 +98,5 @@ export const deleteTask = (id) => {
   console.log(`${url}/tasks/${id}`)
   return request(`${url}/tasks/${id}`,'DELETE');
 }
+
 

@@ -6,24 +6,27 @@ class TasksStore {
   data = [];
   preFiltredData = {};
   filtredData = [];
-  currentTask ={};
+  currentTask = {};
   currentComments = [];
   pagination = {limit:8, page:0, total:0};
+  testTasks = [];
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
-      getTask: computed,
     })
     onBecomeObserved(this, 'filtredData', this.fetch);
+    
   }
 
-  *fetch() {
-    const response = yield getTasks(this.preFiltredData,this.pagination.page);
+  async fetch(){
+    const response = await getTasks(this.preFiltredData,this.pagination.page);
+    console.log(response)
     this.filtredData = response.data;
     this.pagination.total = response.total;
-    this.data = response.data;
     this.currentTask = {};
+    
   }
+
 
   *addTask(data){
     yield addTask(data);
@@ -46,7 +49,7 @@ class TasksStore {
   filterOn(form){
     this.preFiltredData = form;
     this.pagination.page = 0;
-    this.fetch();
+    //this.fetch();
   }
 
 
@@ -82,20 +85,20 @@ class UsersStore {
   constructor () {
     makeAutoObservable(this,{},{
       autoBind: true,
-      currentUserData: computed,
     })
-
-    onBecomeObserved(this, 'data', this.fetch);
-
+    onBecomeObserved(this, 'usersList', this.fetch);
   }
 
-  *fetch() {
-    const response = yield getUsers(this.pagination.page);
+  async fetch(){
+    const response = await getUsers(this.pagination.page);
+    console.log(response)
     this.data  = response.data;
     this.data.map(item => {this.usersList[item.id] = item.username});
     this.pagination.total = response.total;
-
+    console.log('kikik');
   }
+
+
   *allUsersFetch() {
     const response = yield getAllUsers();
     response.map(item => {this.allUsers[item.id] = item.username});

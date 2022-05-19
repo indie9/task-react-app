@@ -46,7 +46,7 @@ const Header = observer( ({mode}) => {
             <Link to={AppRoute.USERS} className={`lnk ${!chek && 'lnk-active'}`}>Пользователи</Link>
           </div>
           }
-          {mode !== "login" &&
+          {false &&
           <div className="header_wrap-profile">
 
               <span className="username">{users.profileData.username}</span>
