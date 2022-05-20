@@ -21,14 +21,15 @@ const Profile =observer( () => {
   const [currentTaskList,setCurrentTaskList] = useState([...tasks.filtredData]);
   //обновляем список задач
   useEffect(() => {
-    if (!_.isEqual(tasks.filtredData,currentTaskList)){
-      setCurrentTaskList(tasks.filtredData);
-    }
     //проверяем тот ли фильтр применен
     if ((JSON.stringify(tasks.preFiltredData) !== JSON.stringify({"assignedUsers": [id] }))){
       tasks.filterOn({"assignedUsers": [id]});
       tasks.fetch().then(() => setCurrentTaskList(tasks.filtredData))
     }
+    if (!_.isEqual(tasks.filtredData,currentTaskList)){
+      setCurrentTaskList(tasks.filtredData);
+    }
+
   })
 
   //получаем профиль юзуеря соответсвующего ид
@@ -49,7 +50,8 @@ const Profile =observer( () => {
   //редактируем профиль
   const profileEdit = action((evt) => {
     evt.preventDefault();
-    users.editUser({...form,"password": localStorage.getItem('userPass')}).then(() => {
+    users.editUser({...form,"password": localStorage.getItem('userPass')})
+    .then(() => {
       users.takeProfile(id)
       .then(() => {
         setForm({...users.currentUserData})

@@ -194,7 +194,7 @@ const TaskPage =observer( () => {
 
             <div className="taskPage-info">
                 <p className='taskPage-title'>Описание</p>
-                <p>{currentTask.description}</p>
+                <p  className="taskPage-info-text">{currentTask.description}</p>
             </div>
 
             <form className="taskPage-comments" onSubmit={postComment}>

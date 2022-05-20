@@ -11,14 +11,22 @@ import TaskPage from '../../pages/taskpage/taskpage';
 import Users from '../../pages/users/users';
 import { users } from '../../store';
 import '../../scss/root.scss'
+import { configure } from "mobx"
+
 
 
 const App = observer(() => {
-  //запоминаем текущего пользователя
+  configure({
+    enforceActions: "never",
+})
+  //запоминаем текущего пользователят
   const loginFlag = localStorage.getItem('userId');
   if (loginFlag){
-    users.takeUser(loginFlag)
+     users.takeUser(loginFlag);
   }
+  if  (!users.allUsers[0]) {
+    users.allUsersFetch();
+   }
   return (
     <BrowserRouter>
       {loginFlag ?

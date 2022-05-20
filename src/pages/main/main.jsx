@@ -3,18 +3,18 @@ import Header from '../../components/header/header';
 
 import TaskBoard from '../../components/taskBoard/taskBoard';
 import Title from '../../components/title/title';
-import { tasks } from '../../store';
+import { tasks, users } from '../../store';
 import { observer } from 'mobx-react-lite';
 
 const Main = observer(() => {
   //if (!tasks.filtredData[0]){
 
     //console.log('helllo',tasks.filtredData)
-   
-  
+
+
   return (
     <>
-      <Header /> 
+      <Header />
       <section className="main__wrapper">
 
         <Title />

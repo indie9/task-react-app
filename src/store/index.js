@@ -15,35 +15,33 @@ class TasksStore {
       autoBind: true,
     })
     onBecomeObserved(this, 'filtredData', this.fetch);
-    
   }
 
   async fetch(){
     const response = await getTasks(this.preFiltredData,this.pagination.page);
-    console.log(response)
     this.filtredData = response.data;
     this.pagination.total = response.total;
     this.currentTask = {};
-    
+
   }
 
 
-  *addTask(data){
-    yield addTask(data);
-    yield this.fetch();
+  async addTask(data){
+    await addTask(data);
+    await this.fetch();
   }
 
-  *getTask(id){
-    const response = yield getTask(id);
+  async getTask(id){
+    const response = await getTask(id);
     this.currentTask = response;
-    const res  = yield getComments(this.currentTask.id)
+    const res  = await getComments(this.currentTask.id)
     this.currentComments = res;
   }
 
 
-  *deleteTask(id){
-    yield deleteTask(id);
-    yield this.fetch();
+  async deleteTask(id){
+    await deleteTask(id);
+    await this.fetch();
   }
 
   filterOn(form){
@@ -56,21 +54,21 @@ class TasksStore {
   removeTask (_id){
     this.data = this.data.filter(item => item._id !== _id);
   }
-  *addComment(commentData){
-    yield addComment(commentData);
+  async addComment(commentData){
+    await addComment(commentData);
   }
-  *removeComment(id){
-    yield removeComment(id);
-    const res  = yield getComments(this.currentTask.id);
+  async removeComment(id){
+    await removeComment(id);
+    const res  = await getComments(this.currentTask.id);
     this.currentComments = res;
   }
-  *addTime(id,timeData){
-    yield addTime(id,timeData);
+  async addTime(id,timeData){
+    await addTime(id,timeData);
   }
-  *changeStatus(id,status){
-    yield changeStatus(id,status);
-    yield this.fetch();
-    yield this.getTask(id);
+  async changeStatus(id,status){
+    await changeStatus(id,status);
+    await this.fetch();
+    await this.getTask(id);
   }
 
 }
@@ -87,42 +85,43 @@ class UsersStore {
       autoBind: true,
     })
     onBecomeObserved(this, 'usersList', this.fetch);
+    //onBecomeObserved(this, 'allUsers', this.allUsersFetch);
   }
 
   async fetch(){
     const response = await getUsers(this.pagination.page);
-    console.log(response)
     this.data  = response.data;
     this.data.map(item => {this.usersList[item.id] = item.username});
     this.pagination.total = response.total;
-    console.log('kikik');
+
   }
 
 
-  *allUsersFetch() {
-    const response = yield getAllUsers();
-    response.map(item => {this.allUsers[item.id] = item.username});
+  async allUsersFetch() {
+    const response = await getAllUsers();
+    response.map((item) => {this.allUsers[item.id] = item.username});
   }
-  *getLogin(form) {
-    const response = yield userLogin(form);
+  async getLogin(form) {
+    const response = await userLogin(form);
     this.profileData  = response;
     if (this.profileData.id) {
       localStorage.setItem('userId', this.profileData.id);
       localStorage.setItem('userPass', form.password);
     }
   }
-  *takeUser(id) {
-    const response = yield getUser(id);
+  async takeUser(id) {
+    const response = await getUser(id);
     this.profileData  = response;
   }
-  *takeProfile(id){
-    const response = yield getUser(id);
+  async takeProfile(id){
+    const response = await getUser(id);
     this.currentUserData  = response;
   }
-  *editUser(form) {
-    const response = yield editUser(form);
-    this.profileData  = response;
-    yield this.takeUser(this.profileData.id);
+  async editUser(form) {
+    const response = await editUser(form);
+    this.profileData  = response.data;
+    console.log(response)
+    //await this.takeUser(this.profileData.id);
   }
 }
 

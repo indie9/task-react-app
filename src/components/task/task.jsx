@@ -9,7 +9,7 @@ import { observer } from "mobx-react-lite";
 const Task = observer( ({event,userList}) => {
   //разворачиваем данные задачи из пропсов
   const {id,title,assignedId,type,status,rank} = event;
-  console.log(id,title,assignedId,type,status,rank)
+
   //скрыть показать дропдаун
   const [visableID, setVisableID] = useState()
   const setVis = () => {

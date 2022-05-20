@@ -8,7 +8,7 @@
   align-items: center;
 
   & .sub-title{
-    
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -17,8 +17,11 @@
       font-size: 24px;
       line-height: 28px;
       color: var(--text-color);
+      overflow: hidden;
+      white-space: nowrap;
+      max-width: 600px;
     }
-    
+
   }
   & .buttons{
     display: flex;

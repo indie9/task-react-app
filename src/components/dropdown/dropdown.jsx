@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { observer } from "mobx-react-lite";
 import { tasks } from "../../store";
 import { typeEn } from "../../const";
 import { dropContent } from "../../const";
+import { users } from '../../store';
 
-const Dropdown =observer( ({type,values,searchForm,setSearchForm}) => {
+const Dropdown = observer( ({type,values,searchForm,setSearchForm}) => {
 
   //колличество выбраных пунктов
   const [count,setCount] = useState(0);
@@ -30,13 +31,25 @@ const Dropdown =observer( ({type,values,searchForm,setSearchForm}) => {
   //заполняем/редактируем форму сортировки
   const preFilter = (evt) => {
     evt.target.checked ? setCount(count + 1) : setCount(count - 1);
-
     evt.target.checked
     ?
     setSearchForm({...searchForm, [type]: [...searchForm[type],evt.target.value]})
     :
     setSearchForm({...searchForm, [type]: searchForm[type].filter(item => item != evt.target.value) })
   }
+
+  useEffect(() => {
+    const onClick = e => {
+      const checkbox = document.getElementById(`checkboxes${type}`);
+      const multisel = document.getElementById(`multiselect-${type}`);
+      if (!checkbox.contains(e.target) && !multisel.contains(e.target) ){
+        multisel.classList.remove('active-checkbox');
+        checkbox.style.display = "none";
+      }
+    }
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  });
 
   return (
       <div className="multiselect" id={`multiselect-${type}`}>

@@ -6,6 +6,8 @@ import { Link,useRouteMatch } from "react-router-dom";
 import { AppRoute } from "../../const";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { users } from "../../store/index";
+import { useState,useEffect } from "react";
+
 const Title = observer( ({mode}) =>{
   const { path } = useRouteMatch();
   const { id } = useParams();
@@ -31,7 +33,10 @@ const Title = observer( ({mode}) =>{
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
     modal.classList.remove("hidden");
   }
-  const profile = {...users.currentUserData};
+  const profile = users.currentUserData;
+
+
+
     return(
         <div className="title">
           <div className="sub-title">
@@ -39,7 +44,7 @@ const Title = observer( ({mode}) =>{
             {path === AppRoute.MAIN && <span className="name"> Задачи </span> }
             {path === AppRoute.TASK && <span className="name"> {title} </span>}
             {path === AppRoute.TASK && <div className={`btn status-${status}`}>{status}</div>}
-            {path === AppRoute.PROFILE && <span className="name"> {profile.username} </span> }
+            {path === AppRoute.PROFILE && <span className="name"> {profile.username ? profile.username : "Loading" } </span> }
             {path === AppRoute.EDIT_TASK && (id ? <span className="name"> Редактирование </span> : <span className="name"> Создание  </span>) }
             {path === AppRoute.USERS && <span className="name"> Пользователи </span>}
           </div>

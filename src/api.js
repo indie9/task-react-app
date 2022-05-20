@@ -1,24 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
-import Header from "./components/header/header";
-import { events } from "./store";
-
-const url = 'http://93.95.97.34/api'
-
-const request = async (url, method = 'GET', body) => {
-  //console.log("responce",url)
-  const response = await fetch(url, {
-    method,
-    body: JSON.stringify(body),
-    headers: new Headers({
-      'Content-type': 'application/json'
-    })
-  });
-
-
-  return await response.json();
-}
-
-
 const axios = require('axios').default;
 const inst = axios.create({
     baseURL: 'http://93.95.97.34/api'
@@ -53,50 +32,80 @@ export const getUsers = (page) => {
       })
 }
 
-
 export const getAllUsers = () => {
-  return request(`${url}/users/all`);
+  return inst.get('/users/all')
+      .then((res) => {
+          return res.data;
+      })
+      .catch((err) => {
+      })
 }
 
+export const addTask = (taskData) => {
+  return inst.put('tasks/createOrEdit',taskData)
+}
 
 export const userLogin = (data) => {
-  return request(`${url}/users/login`, 'POST', data);
+  return inst.post('users/login',data)
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+    })
 }
+
 
 export const getUser = (id) => {
-  return request(`${url}/users/${id}`);
+  return inst.get(`users/${id}`)
+      .then((res) => {
+          return res.data;
+      })
+      .catch((err) => {
+      })
 }
-export const addTask = ( (taskData) => {
-  return request(`${url}/tasks/createOrEdit`, 'PUT', taskData)
-})
 
-export const getTask = ( (id) => {
-  return request(`${url}/tasks/${id}`)
-})
-export const editUser = (form) => {
-  return request(`${url}/users/edit`,'PUT', form);
+
+export const getTask = (id) => {
+  return inst.get(`tasks/${id}`)
+      .then((res) => {
+          return res.data;
+      })
+      .catch((err) => {
+      })
 }
+
+export const editUser = (form) => {
+  return inst.put('users/edit',form)
+}
+
 
 export const getComments = ( (id) => {
-  return request(`${url}/comments/${id}`)
+  return inst.get(`comments/${id}`)
+    .then((res) => {
+        return res.data;
+    })
+    .catch((err) => {
+    })
 })
 
 export const addComment = ( (commentData) => {
-  return request(`${url}/comments/createOrEdit`, 'PUT', commentData)
+  return inst.put('comments/createOrEdit',commentData)
 })
+
 export const removeComment = ( (id) => {
-  return request(`${url}/comments/${id}`, 'DELETE')
+  return inst.delete(`comments/${id}`,id)
 })
+
 export const addTime = ( (id,timeData) => {
-  return request(`${url}/tasks/${id}/worktime`, 'PATCH', timeData)
+  return inst.patch(`tasks/${id}/worktime`,timeData)
 })
+
 export const changeStatus = ( (id,status) => {
-  return request(`${url}/tasks/${id}/status/${status}`, 'PATCH')
+  return inst.patch(`tasks/${id}/status/${status}`)
 })
 
 export const deleteTask = (id) => {
-  console.log(`${url}/tasks/${id}`)
-  return request(`${url}/tasks/${id}`,'DELETE');
+  return inst.delete(`tasks/${id}`)
 }
 
 

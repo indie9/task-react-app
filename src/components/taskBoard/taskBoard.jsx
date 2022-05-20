@@ -12,7 +12,7 @@ const TaskBoard = observer( () => {
   const location = useLocation();
   //получаем всех пользователей
   const userList = users.allUsers //{"6273dca5d09b551dca87629c": 'Алексей Кутилов', "6273dcb7d09b551dca87629d": 'A', "6273dcd2d09b551dca87629e": 'Артем Сорокин', "6273dce7d09b551dca87629f": 'Николай Рубцов',};
-  console.log(users.usersList)
+
   /*if (!userList.length){
     useEffect(() => {
       users.allUsersFetch().then(() => setUserList(users.allUsers))

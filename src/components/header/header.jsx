@@ -1,11 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
 import { AppRoute } from '../../const';
 import { Link,useRouteMatch } from "react-router-dom";
-import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 import { users } from '../../store';
 import { observer } from 'mobx-react-lite';
 import { tasks } from '../../store';
+import { action } from "mobx";
 
 const Header = observer( ({mode}) => {
 
@@ -24,6 +23,12 @@ const Header = observer( ({mode}) => {
 
   const chek = (path === AppRoute.MAIN) || (path === AppRoute.EDIT_TASK) || (path === AppRoute.TASK)
 
+  const userProfile = users.profileData;
+
+  const taskFetch = action(() => {
+    tasks.filterOn({})
+    tasks.fetch();
+  })
     return (
       <section className="header">
         <section className="header_wrap">
@@ -40,18 +45,18 @@ const Header = observer( ({mode}) => {
             </svg>
           </Link>
 
-         {mode !== "login" &&
+         { mode !== "login" &&
          <div className="header_wrap-group-lnk">
-            <Link to={AppRoute.MAIN} onClick={tasks.filterOn({})} className={`lnk ${chek && 'lnk-active'} `}> Задачи</Link>
+            <Link to={AppRoute.MAIN} onClick={taskFetch} className={`lnk ${chek && 'lnk-active'} `}> Задачи</Link>
             <Link to={AppRoute.USERS} className={`lnk ${!chek && 'lnk-active'}`}>Пользователи</Link>
           </div>
           }
-          {false &&
+          { mode !== "login" &&
           <div className="header_wrap-profile">
 
               <span className="username">{users.profileData.username}</span>
               <div className="userfoto ">
-                  <img className={`profile_foto`} onClick={setVis} src={users.profileData.photoUrl} alt="" width={42} height={42} />
+                  <img className={`profile_foto`} onClick={setVis} src={userProfile.photoUrl} alt="" width={42} height={42} />
                   <div className={`dropdown-content `} id={"header-drop-content"} >
                     <Link to={`/profile/${users.profileData.id}`} onClick={setVis} className='dropdown-content-item' >Посмотреть профиль</Link>
                     <button className='dropdown-content-item' onClick={logOut} style={{color : "#FF6161"}}> Выйти </button>

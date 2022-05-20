@@ -7,7 +7,7 @@ import TaskBoard from "../taskBoard/taskBoard";
 
 const Bio = observer( ({currentTaskList}) =>{
     //данные текущего профиля
-    const profile = {...users.currentUserData};
+    const profile = users.currentUserData;
 
     return (
         <section className="board__profile" >

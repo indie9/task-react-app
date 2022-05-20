@@ -30,6 +30,7 @@ const Sorting = observer( () =>{
     }
     //фильтруем
     tasks.preFiltredData = form;
+    tasks.pagination.page = 0;
     tasks.fetch();
   })
 
@@ -54,6 +55,7 @@ const Sorting = observer( () =>{
      for (let i = 0; i < customCheckboxes.length; i ++){
        customCheckboxes[i].checked = false;
      }
+     tasks.fetch();
   })
 
     return(
