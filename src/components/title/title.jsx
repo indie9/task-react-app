@@ -11,6 +11,7 @@ import { useState,useEffect } from "react";
 const Title = observer( ({mode}) =>{
   const { path } = useRouteMatch();
   const { id } = useParams();
+  const { userId } = useParams();
   //сабмити форму вне элемента
   const submit = () => {
     const form = document.getElementById("taskFormID");
@@ -26,8 +27,12 @@ const Title = observer( ({mode}) =>{
     window.location.href = '/';
 
   }
-  const status = tasks.currentTask.status;
-  const title = tasks.currentTask.title
+  let status
+  let title
+  if ( !userId ){
+    status = tasks.currentTask.status;
+    title = tasks.currentTask.title
+  }
   //открываем модалку вне элемента
   const editProfile = () => {
     const modal = document.getElementsByClassName("edit_profile_modal")[0];
@@ -138,7 +143,7 @@ const Title = observer( ({mode}) =>{
 
 
                 <Link
-                to={`/form`}
+                to={`/form/special/${id}`}
                 type="button"
                 className="btn default"
                 >

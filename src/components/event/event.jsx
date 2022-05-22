@@ -6,7 +6,11 @@ import { observer } from "mobx-react-lite";
 
 const Event = observer( () =>{
       //ид задачи
+
       const { id } = useParams();
+      const { userId } = useParams();
+
+      console.log(userId)
       //список всех пользователей
       const [userList,setUserList] = useState({});
 
@@ -19,7 +23,7 @@ const Event = observer( () =>{
 
       //форма редактирования
       const [form, setForm] = React.useState(
-        id
+        (id && !userId)
         ?
         {...tasks.currentTask}
         :
@@ -37,9 +41,14 @@ const Event = observer( () =>{
       })
 
       //в случае если форма редактируется заполняем поля формы значениями текущей задачи
-      if (!form.id && id){
+      if (!form.id && id && !userId){
         tasks.getTask(id).then(() => setForm({...tasks.currentTask}) )
       }
+      if (!form.assignedId && userId){
+
+        setForm({...form,assignedId: userId});
+      }
+
       //заполняем форму
       const handleFieldChange = (evt) => {
         const { name, value } = evt.target;

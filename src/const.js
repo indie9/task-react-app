@@ -1,7 +1,7 @@
 export const AppRoute = {
   MAIN: '/',
   TASK: '/task/:id?',
-  EDIT_TASK: '/form/:id?',
+  EDIT_TASK: '/form/:id?/:userId?',
   USERS: '/users',
   PROFILE: '/profile/:id?'
 };
