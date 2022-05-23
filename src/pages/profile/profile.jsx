@@ -24,7 +24,7 @@ const Profile =observer( () => {
 
 
     //проверяем тот ли фильтр применен
-    if (!_.isEqual(tasks.filtredData,{"assignedUsers": [id] })){
+    if ((JSON.stringify(tasks.preFiltredData) !== JSON.stringify({"assignedUsers": [id] }))){
       tasks.filterOn({"assignedUsers": [id]});
       tasks.fetch().then(() => setCurrentTaskList(tasks.filtredData))
     }
