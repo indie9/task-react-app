@@ -21,11 +21,14 @@ const Profile =observer( () => {
   const [currentTaskList,setCurrentTaskList] = useState([...tasks.filtredData]);
   //обновляем список задач
   useEffect(() => {
+
+
     //проверяем тот ли фильтр применен
     if ((JSON.stringify(tasks.preFiltredData) !== JSON.stringify({"assignedUsers": [id] }))){
       tasks.filterOn({"assignedUsers": [id]});
       tasks.fetch().then(() => setCurrentTaskList(tasks.filtredData))
     }
+    setCurrentTaskList(tasks.filtredData);
     if (!_.isEqual(tasks.filtredData,currentTaskList)){
       setCurrentTaskList(tasks.filtredData);
     }
