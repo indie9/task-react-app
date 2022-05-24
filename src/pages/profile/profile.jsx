@@ -30,7 +30,8 @@ const Profile =observer( () => {
     }
 
     if (!_.isEqual(tasks.filtredData,currentTaskList)){
-      setCurrentTaskList(tasks.filtredData);
+      tasks.filterOn({"assignedUsers": [id]});
+      tasks.fetch().then(() => setCurrentTaskList(tasks.filtredData))
     }
 
   })
@@ -72,7 +73,7 @@ const Profile =observer( () => {
       <section className="main__wrapper">
         <Title />
         <div className="board">
-          <Bio currentTaskList={currentTaskList}/>
+          <Bio />
         </div>
         <div className='edit_profile_modal hidden' >
           <div className='modal_board' onSubmit={profileEdit}>

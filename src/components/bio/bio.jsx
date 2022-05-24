@@ -5,7 +5,7 @@ import { observer } from "mobx-react-lite";
 import TaskBoard from "../taskBoard/taskBoard";
 
 
-const Bio = observer( ({currentTaskList}) =>{
+const Bio = observer( () =>{
     //данные текущего профиля
     const profile = users.currentUserData;
 
@@ -23,7 +23,7 @@ const Bio = observer( ({currentTaskList}) =>{
             </article>
             <article className="board__profile-tasks" >
                 <p className="title"> Задачи </p>
-                <TaskBoard taskList={currentTaskList} />
+                <TaskBoard />
             </article>
         </section>
     )});
